@@ -1,4 +1,3 @@
-# next-airbnb
 # among
 # among
 # among
