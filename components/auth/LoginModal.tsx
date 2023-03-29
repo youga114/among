@@ -8,7 +8,6 @@ import palette from "../../styles/palette";
 import Button from "../common/Button";
 import Input from "../common/Input";
 import { useDispatch } from "react-redux";
-import { authActions } from "../../store/auth";
 import { loginAPI } from "../../lib/api/auth";
 import useValidateMode from "../../hooks/useValidateMode";
 import { userActions } from "../../store/user";
@@ -72,10 +71,6 @@ const LoginModal: React.FC<IProps> = ({ closeModal }) => {
 
     const togglePasswordHiding = () => {
         setIsPasswordHided(!isPasswordHided);
-    };
-
-    const changeToSignUpModal = () => {
-        dispatch(authActions.setAuthMode("signup"));
     };
 
     const { setValidateMode } = useValidateMode();
@@ -143,16 +138,7 @@ const LoginModal: React.FC<IProps> = ({ closeModal }) => {
                     로그인
                 </Button>
             </div>
-            <p>
-                이미 에어비앤비 계정이 있나요?
-                <span
-                    className="login-modal-set-signup"
-                    role="presentation"
-                    onClick={changeToSignUpModal}
-                >
-                    회원가입
-                </span>
-            </p>
+            <p>어몽 계정이 있나요?</p>
         </Container>
     );
 };
