@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import AirbnbLogoIcon from "../public/static/svg/logo/logo.svg";
-import AirbnbLogoTextIcon from "../public/static/svg/logo/logo_text.svg";
+import AmongLogoIcon from "../public/static/svg/logo/logo.svg";
 import Link from "next/link";
 import { useSelector } from "../store";
 import HeaderAuths from "./HeaderAuths";
@@ -36,8 +35,8 @@ const Header: React.FC = () => {
     return (
         <Container>
             <Link href="/" className="header-logo-wrapper">
-                <AirbnbLogoIcon className="header-logo" />
-                <AirbnbLogoTextIcon />
+                <AmongLogoIcon className="header-logo" />
+                Among
             </Link>
             {!isLogged && <HeaderAuths />}
             {isLogged && <HeaderUserProfile />}

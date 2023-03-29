@@ -3,6 +3,7 @@ import styled from "styled-components";
 import useSearchRoomDate from "../../../hooks/useSearchRoomDate";
 import palette from "../../../styles/palette";
 import DatePicker from "../../common/DatePicker";
+import SearchRoomButton from "./SearchRoomButton";
 
 const Container = styled.div`
     position: relative;
@@ -47,6 +48,11 @@ const Container = styled.div`
             display: flex;
         }
     }
+    .search-room-bar-button-wrapper {
+        position: absolute;
+        right: calc(-100% + 100px);
+        top: 12px;
+    }
 `;
 
 const SearchRoomBarCheckOutDate: React.FC = () => {
@@ -71,6 +77,10 @@ const SearchRoomBarCheckOutDate: React.FC = () => {
                     minDate={checkInDate}
                     placeholderText="날짜 추가"
                 />
+            </div>
+
+            <div className="search-room-bar-button-wrapper">
+                <SearchRoomButton />
             </div>
         </Container>
     );

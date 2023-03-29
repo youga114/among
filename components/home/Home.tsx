@@ -1,31 +1,49 @@
 import React from "react";
 import styled from "styled-components";
 import SearchRoomBar from "./searchRoomBar/SearchRoomBar";
-import palette from "../../styles/palette";
 
 const Container = styled.div`
     width: 100%;
-    padding: 0 80px;
-
-    .home-search-bar-label {
-        margin: 32px 0 16px;
-        font-weight: 600;
-        font-size: 14px;
-    }
-    h2 {
-        width: 557px;
-        margin: 80px 0 60px;
-        font-size: 50px;
-        color: ${palette.cardinal};
+    padding: 20px 80px;
+    .home-title {
+        margin: 20px 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+        text-align: center;
+        h2 {
+            font-size: 20px;
+            color: white;
+            text-shadow: black 1px 0 10px;
+        }
+        h3 {
+            font-size: 15px;
+        }
+        h4 {
+            font-size: 15px;
+        }
     }
 `;
 
 const Home: React.FC = () => {
+    const today = new Date();
+    const metDay = new Date(2021, 11, 19);
+
     return (
         <Container>
-            <p className="home-search-bar-label">숙소</p>
             <SearchRoomBar />
-            <h2>가까운 여행지, 에어비엔비와 탐험해보세요.</h2>
+            <div className="home-title">
+                <h2>처음 만난 날</h2>
+                <h3>
+                    {Math.floor(
+                        (today.getTime() - metDay.getTime()) /
+                            (1000 * 60 * 60 * 24)
+                    ) + 1}{" "}
+                    일째
+                </h3>
+                <h4>지나 🤍 유준</h4>
+            </div>
         </Container>
     );
 };

@@ -35,8 +35,6 @@ const SearchRoomBar: React.FC = () => {
                 <SearchRoomCheckInDate />
                 <div className="search-room-bar-input-divider" />
                 <SearchRoomCheckOutDate />
-                <div className="search-room-bar-input-divider" />
-                <SearchRoomGuests />
             </div>
         </Container>
     );
