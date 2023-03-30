@@ -41,12 +41,6 @@ const Container = styled.form`
         padding-bottom: 16px;
         border-bottom: 1px solid ${palette.gray_eb};
     }
-
-    .login-modal-set-signup {
-        color: ${palette.dark_cyan};
-        margin-left: 8px;
-        cursor: pointer;
-    }
 `;
 
 interface IProps {

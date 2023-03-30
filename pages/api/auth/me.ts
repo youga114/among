@@ -15,7 +15,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             const user = Data.user.find({ id: Number(userId) });
             if (!user) {
                 res.statusCode = 404;
-                return res.send("해당 우ㅠ저가 없습니다.");
+                return res.send("해당 유저가 없습니다.");
             }
 
             const userWithoutPassword: Partial<

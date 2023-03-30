@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useSelector } from "../../store";
 import SearchRoomBar from "./searchRoomBar/SearchRoomBar";
 
 const Container = styled.div`
@@ -27,12 +28,14 @@ const Container = styled.div`
 `;
 
 const Home: React.FC = () => {
+    const isLogged = useSelector((state) => state.user.isLogged);
+
     const today = new Date();
     const metDay = new Date(2021, 11, 19);
 
     return (
         <Container>
-            <SearchRoomBar />
+            {isLogged && <SearchRoomBar />}
             <div className="home-title">
                 <h2>처음 만난 날</h2>
                 <h3>
