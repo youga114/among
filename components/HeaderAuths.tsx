@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import useModal from "../hooks/useModal";
 import { authActions } from "../store/auth";
-import palette from "../styles/palette";
 import AuthModal from "./auth/AuthModal";
 
 const Container = styled.div`

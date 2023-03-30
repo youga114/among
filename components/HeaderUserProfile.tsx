@@ -99,7 +99,7 @@ const HeaderUserProfile: React.FC = () => {
                 </button>
                 {isUsermenuOpened && (
                     <ul className="header-usermenu">
-                        <li>숙소 관리</li>
+                        <li>프로필 관리</li>
                         <Link
                             href="/room/register/building"
                             onClick={() => {
@@ -107,7 +107,7 @@ const HeaderUserProfile: React.FC = () => {
                             }}
                             role="presentation"
                         >
-                            <li>숙소 등록하기</li>
+                            <li>사진 등록하기</li>
                         </Link>
                         <div className="header-usermenu-divider" />
                         <li role="presentation" onClick={logout}>

@@ -4,7 +4,6 @@ import palette from "../../../styles/palette";
 import SearchRoomBarLocation from "./SearchRoomBarLocation";
 import SearchRoomCheckInDate from "./SearchRoomCheckInDate";
 import SearchRoomCheckOutDate from "./SearchRoomCheckOutDate";
-import SearchRoomGuests from "./SearchRoomGuests";
 
 const Container = styled.div`
     width: 100%;

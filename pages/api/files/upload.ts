@@ -20,12 +20,18 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                         secretAccessKey: process.env.SECRET_ACCESSKEY_ID,
                     });
 
-                    const stream = createReadStream(files.file.filepath);
+                    const file = files.file as formidable.File;
+                    const stream = createReadStream(file.filepath);
+
+                    let fileName = file.originalFilename;
+                    if (fields.fileName) {
+                        fileName = fields.fileName as string;
+                    }
 
                     await s3
                         .upload({
                             Bucket: process.env.S3_BUCKET_NAME!,
-                            Key: files.file.newFilename,
+                            Key: fileName!,
                             ACL: "public-read",
                             Body: stream,
                         })

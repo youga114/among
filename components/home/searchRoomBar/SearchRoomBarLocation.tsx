@@ -157,7 +157,7 @@ const SearchRoomBarLocation: React.FC = () => {
                     <input
                         value={location}
                         onChange={(e) => setLocationDispatch(e.target.value)}
-                        placeholder="어디로 여행 가세요?"
+                        placeholder="지역 추가"
                         ref={inputRef}
                     />
                 </div>

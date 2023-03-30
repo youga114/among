@@ -8,6 +8,7 @@ const globalStyle = css`
         box-sizing: border-box;
     }
     body {
+        overflow-x: hidden;
         font-family: Noto Sans, Noto Sans KR;
         color: ${palette.black};
     }
