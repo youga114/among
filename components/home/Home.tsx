@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 const Container = styled.div`
     width: 100%;
     height: 100%;
-    padding: 20px 80px;
+    padding: 20px 80px 0px 80px;
     display: flex;
     flex-direction: column;
     .home-title {
@@ -32,30 +32,41 @@ const Container = styled.div`
             font-size: 15px;
         }
     }
-    .home-photo-register {
-        position: absolute;
-        top: 90%;
-
-        input {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            cursor: pointer;
-        }
+    .home-photo-container {
+        width: 100%;
+        height: calc(100vh - 260px);
+        position: relative;
+        overflow: hidden;
+        background-color: black;
         img {
-            width: 100%;
-            max-height: 100%;
+            position: absolute;
+            height: 100%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
-        .home-photo-register-button {
-            width: 60px;
-            height: 60px;
-            border: 0;
-            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.18);
-            border-radius: 50%;
-            background-color: white;
-            cursor: pointer;
-            outline: none;
+        .home-photo-register {
+            position: absolute;
+            left: 1%;
+            top: 85%;
+
+            input {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                opacity: 0;
+                cursor: pointer;
+            }
+            .home-photo-register-button {
+                width: 60px;
+                height: 60px;
+                border: 0;
+                box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.18);
+                border-radius: 50%;
+                background-color: white;
+                cursor: pointer;
+                outline: none;
+            }
         }
     }
 `;
@@ -102,17 +113,19 @@ const Home: React.FC = () => {
                 </h3>
                 <h4>지나 🤍 유준</h4>
             </div>
-            <img src={photo} alt="" />
             {isLogged && (
-                <div className="home-photo-register">
-                    <input
-                        type="file"
-                        accept="image/*"
-                        onChange={uploadImage}
-                    />
-                    <button className="home-photo-register-button">
-                        <RegisterPhotoIcon />
-                    </button>
+                <div className="home-photo-container">
+                    <img src={photo} alt="" />
+                    <div className="home-photo-register">
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={uploadImage}
+                        />
+                        <button className="home-photo-register-button">
+                            <RegisterPhotoIcon />
+                        </button>
+                    </div>
                 </div>
             )}
         </Container>
