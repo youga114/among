@@ -3,11 +3,8 @@ import { readFileSync } from "fs";
 import { StoredUserType } from "../../types/user";
 
 const getList = () => {
-    const jsonDirectory = path.join(process.cwd(), "json");
-    const usersBuffer = readFileSync(
-        jsonDirectory + "/data/users.json",
-        "utf8"
-    );
+    const jsonDirectory = path.join(process.cwd(), "data");
+    const usersBuffer = readFileSync(jsonDirectory + "/users.json", "utf8");
     const usersString = usersBuffer.toString();
     if (!usersString) {
         return [];
