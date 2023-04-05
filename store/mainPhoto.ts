@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: { photo: string } = {
-    photo: "https://newbie-bucket.s3.ap-northeast-2.amazonaws.com/main.png",
+    photo: "",
 };
 
 const mainPhoto = createSlice({

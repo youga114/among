@@ -85,7 +85,7 @@ const Home: React.FC = () => {
             const file = files[0];
             const formdata = new FormData();
             formdata.append("file", file);
-            formdata.append("fileName", "main.png");
+            formdata.append("from", "main");
             try {
                 const { data } = await uploadFileAPI(formdata);
                 if (data) {
@@ -115,7 +115,7 @@ const Home: React.FC = () => {
             </div>
             {isLogged && (
                 <div className="home-photo-container">
-                    <img src={photo} alt="" />
+                    {photo && <img src={photo} alt="" />}
                     <div className="home-photo-register">
                         <input
                             type="file"

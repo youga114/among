@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import formidable from "formidable";
 import aws from "aws-sdk";
 import { createReadStream } from "fs";
+import mainPhoto from "../../../lib/data/mainPhoto";
 
 export const config = {
     api: {
@@ -23,10 +24,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                     const file = files.file as formidable.File;
                     const stream = createReadStream(file.filepath);
 
-                    let fileName = file.originalFilename;
-                    if (fields.fileName) {
-                        fileName = fields.fileName as string;
-                    }
+                    const fileName =
+                        file.mtime?.toISOString() ?? file.originalFilename;
 
                     await s3
                         .upload({
@@ -36,7 +35,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                             Body: stream,
                         })
                         .promise()
-                        .then((res) => resolve(res.Location))
+                        .then((res) => {
+                            if (fields.from === "main") {
+                                mainPhoto.write({ name: res.Location });
+                            }
+                            resolve(res.Location);
+                        })
                         .catch((e) => reject(e));
                 });
             });
