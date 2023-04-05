@@ -36,10 +36,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                         })
                         .promise()
                         .then((res) => {
+                            const location = decodeURI(res.Location);
+
                             if (fields.from === "main") {
-                                mainPhoto.write({ name: res.Location });
+                                mainPhoto.write({ name: location });
                             }
-                            resolve(res.Location);
+                            resolve(location);
                         })
                         .catch((e) => reject(e));
                 });
