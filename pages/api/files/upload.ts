@@ -27,7 +27,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                         file.mtime?.toISOString() ?? file.originalFilename;
 
                     if (fields.from === "main") {
-                        fileName = "main";
+                        fileName = "main.png";
                     }
 
                     await s3

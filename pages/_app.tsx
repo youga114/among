@@ -7,8 +7,6 @@ import { cookieStringToObject } from "../lib/utils";
 import axios from "../lib/api";
 import { meAPI } from "../lib/api/auth";
 import { userActions } from "../store/user";
-import { getMainPhotoAPI } from "../lib/api/photo";
-import { mainPhotoActions } from "../store/mainPhoto";
 
 const app = ({ Component, ...rest }: AppProps) => {
     const { store, props } = wrapper.useWrappedStore(rest);
@@ -36,13 +34,6 @@ app.getInitialProps = wrapper.getInitialAppProps(
                 const { data } = await meAPI();
                 store.dispatch(userActions.setLoggedUser(data));
             }
-        } catch (e) {
-            console.log(e);
-        }
-
-        try {
-            const { data } = await getMainPhotoAPI();
-            store.dispatch(mainPhotoActions.setPhoto(data));
         } catch (e) {
             console.log(e);
         }

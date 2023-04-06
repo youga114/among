@@ -4,6 +4,8 @@ import { useSelector } from "../../store";
 import SearchRoomBar from "./searchRoomBar/SearchRoomBar";
 import RegisterPhotoIcon from "../../public/static/svg/register/photo/register_main_photo.svg";
 import { uploadFileAPI } from "../../lib/api/file";
+import { mainPhotoActions } from "../../store/mainPhoto";
+import { useDispatch } from "react-redux";
 
 const Container = styled.div`
     width: 100%;
@@ -75,6 +77,8 @@ const Home: React.FC = () => {
     const today = new Date();
     const metDay = new Date(2021, 11, 19);
 
+    const dispatch = useDispatch();
+
     const uploadImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const { files } = event.target;
         if (files && files.length > 0) {
@@ -83,7 +87,9 @@ const Home: React.FC = () => {
             formdata.append("file", file);
             formdata.append("from", "main");
             try {
-                await uploadFileAPI(formdata);
+                const { data } = await uploadFileAPI(formdata);
+
+                dispatch(mainPhotoActions.setPhoto(data));
             } catch (e) {
                 console.log(e);
             }
