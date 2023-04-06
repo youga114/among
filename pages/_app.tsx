@@ -7,6 +7,7 @@ import { cookieStringToObject } from "../lib/utils";
 import axios from "../lib/api";
 import { meAPI } from "../lib/api/auth";
 import { userActions } from "../store/user";
+import { cookies } from "next/headers";
 
 const app = ({ Component, ...rest }: AppProps) => {
     const { store, props } = wrapper.useWrappedStore(rest);
@@ -23,9 +24,11 @@ const app = ({ Component, ...rest }: AppProps) => {
 app.getInitialProps = wrapper.getInitialAppProps(
     (store) => async (context: AppContext) => {
         const appInitialProps = await App.getInitialProps(context);
-
         const req = context.ctx.req as any;
-        console.log(req?.cookies);
+
+        const cookieStore = cookies();
+        const accessToken = cookieStore.get("access_token");
+        console.log(accessToken);
 
         const cookieObject = cookieStringToObject(
             context.ctx.req?.headers.cookie
