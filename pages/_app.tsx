@@ -20,25 +20,22 @@ const app = ({ Component, ...rest }: AppProps) => {
     );
 };
 
-app.getInitialProps = wrapper.getInitialAppProps(
-    (store) => async (context: AppContext) => {
-        const appInitialProps = await App.getInitialProps(context);
+app.getInitialProps = wrapper.getInitialAppProps((store) => async (context) => {
+    const appInitialProps = await App.getInitialProps(context);
+    console.log(context);
 
-        const cookieObject = cookieStringToObject(
-            context.ctx.req?.headers.cookie
-        );
-        try {
-            if (cookieObject.access_token) {
-                axios.defaults.headers.cookie = cookieObject.access_token;
-                const { data } = await meAPI();
-                store.dispatch(userActions.setLoggedUser(data));
-            }
-        } catch (e) {
-            console.log(e);
+    const cookieObject = cookieStringToObject(context.ctx.req?.headers.cookie);
+    try {
+        if (cookieObject.access_token) {
+            axios.defaults.headers.cookie = cookieObject.access_token;
+            const { data } = await meAPI();
+            store.dispatch(userActions.setLoggedUser(data));
         }
-
-        return { ...appInitialProps };
+    } catch (e) {
+        console.log(e);
     }
-);
+
+    return { ...appInitialProps };
+});
 
 export default app;
