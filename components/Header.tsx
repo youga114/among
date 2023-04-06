@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import AmongLogoIcon from "../public/static/svg/logo/logo.svg";
+import AlbumIcon from "../public/static/svg/header/album.svg";
 import Link from "next/link";
 import { useSelector } from "../store";
 import HeaderAuths from "./HeaderAuths";
@@ -28,6 +29,9 @@ const Container = styled.div`
     .header-logo-wrapper + div {
         position: relative;
     }
+    .header-logo {
+        margin-right: 6px;
+    }
 `;
 
 const Header: React.FC = () => {
@@ -39,6 +43,11 @@ const Header: React.FC = () => {
                 Among
             </Link>
             {!isLogged && <HeaderAuths />}
+            {isLogged && (
+                <Link href="/album">
+                    <AlbumIcon fill="skyblue" className="header-album" />
+                </Link>
+            )}
             {isLogged && <HeaderUserProfile />}
         </Container>
     );

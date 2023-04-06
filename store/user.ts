@@ -8,7 +8,7 @@ const initialState: UserState = {
     lastname: "",
     firstname: "",
     birthday: "",
-    isLogged: false,
+    isLogged: true,
     profileImage: "",
 };
 
