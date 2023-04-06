@@ -25,9 +25,6 @@ app.getInitialProps = wrapper.getInitialAppProps(
         const appInitialProps = await App.getInitialProps(context);
         const req = context.ctx.req as any;
 
-        console.log(context.ctx);
-        console.log(req.cookies);
-
         const cookieObject = cookieStringToObject(
             context.ctx.req?.headers.cookie
         );
