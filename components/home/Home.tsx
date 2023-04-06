@@ -77,8 +77,6 @@ const Home: React.FC = () => {
     const today = new Date();
     const metDay = new Date(2021, 11, 19);
 
-    const dispatch = useDispatch();
-
     const uploadImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const { files } = event.target;
         if (files && files.length > 0) {
@@ -87,10 +85,7 @@ const Home: React.FC = () => {
             formdata.append("file", file);
             formdata.append("from", "main");
             try {
-                const { data } = await uploadFileAPI(formdata);
-                if (data) {
-                    dispatch(mainPhotoActions.setPhoto(data));
-                }
+                await uploadFileAPI(formdata);
             } catch (e) {
                 console.log(e);
             }
@@ -115,7 +110,7 @@ const Home: React.FC = () => {
             </div>
             {isLogged && (
                 <div className="home-photo-container">
-                    {photo && <img src={photo} alt="" />}
+                    <img src={photo} alt="" />
                     <div className="home-photo-register">
                         <input
                             type="file"
