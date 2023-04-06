@@ -4,8 +4,6 @@ import { useSelector } from "../../store";
 import SearchRoomBar from "./searchRoomBar/SearchRoomBar";
 import RegisterPhotoIcon from "../../public/static/svg/register/photo/register_main_photo.svg";
 import { uploadFileAPI } from "../../lib/api/file";
-import { mainPhotoActions } from "../../store/mainPhoto";
-import { useDispatch } from "react-redux";
 
 const Container = styled.div`
     width: 100%;
