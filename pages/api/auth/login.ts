@@ -48,8 +48,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             res.statusCode = 500;
             return res.send(e);
         }
-
-        return res.end();
     }
     res.statusCode = 405;
 
