@@ -33,7 +33,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                 "Set-Cookie",
                 `access_token=${token}; path=/; expires=${new Date(
                     Date.now() + 60 * 60 * 24 * 1000 * 3
-                ).toUTCString()}; httponly`
+                ).toUTCString()}; httponly; secure;`
             );
 
             const userWithoutPassword: Partial<
