@@ -37,8 +37,8 @@ const getButtonColor = (color: string, colorReverse: boolean) => {
             `;
         default:
             return css`
-                background-color: white;
-                color: ${palette.black};
+                background-color: ${palette.gray_48};
+                color: white;
                 border: 1px solid ${palette.gray_c4};
             `;
     }

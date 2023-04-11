@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useSelector } from "../store";
 import HeaderAuths from "./HeaderAuths";
 import HeaderUserProfile from "./HeaderUserProfile";
+import palette from "../styles/palette";
 
 const Container = styled.div`
     position: sticky;
@@ -53,7 +54,10 @@ const Header: React.FC = () => {
             {isLogged && (
                 <div className="header-right-wrapper">
                     <Link href="/album">
-                        <AlbumIcon fill="skyblue" className="header-album" />
+                        <AlbumIcon
+                            fill={palette.gray_48}
+                            className="header-album"
+                        />
                     </Link>
                     <HeaderUserProfile />
                 </div>

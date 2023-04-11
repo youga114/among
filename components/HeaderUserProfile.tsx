@@ -101,7 +101,7 @@ const HeaderUserProfile: React.FC = () => {
                     <ul className="header-usermenu">
                         <li>프로필 관리</li>
                         <Link
-                            href="/room/register/building"
+                            href="/room/register/photo"
                             onClick={() => {
                                 setIsUsermenuOpened(false);
                             }}

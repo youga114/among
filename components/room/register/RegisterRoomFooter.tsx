@@ -12,16 +12,16 @@ const Container = styled.footer`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 548px;
+    width: 90%;
     height: 82px;
-    padding: 14px 30px 20px;
+    padding: 14px 0px 20px;
     background-color: white;
     z-index: 10;
     border-top: 1px solid ${palette.gray_dd};
     .register-room-footer-back {
         display: flex;
         align-items: center;
-        color: ${palette.dark_cyan};
+        color: ${palette.gray_48};
         cursor: pointer;
         svg {
             margin-right: 8px;
@@ -60,13 +60,11 @@ const RegisterRoomFooter: React.FC<IProps> = ({
     return (
         <Container>
             <Link href={prevHref || ""} className="register-room-footer-back">
-                <BackArrowIcon />
+                <BackArrowIcon fill={palette.gray_48} />
                 뒤로
             </Link>
             <Link href={nextHref || ""}>
-                <Button color="dark_cyan" onClick={onClickNext}>
-                    계속
-                </Button>
+                <Button onClick={onClickNext}>계속</Button>
             </Link>
         </Container>
     );

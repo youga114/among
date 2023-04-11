@@ -65,7 +65,7 @@ const Container = styled.ul`
         position: relative;
         display: inline-block;
         width: calc((100% - 48px) / 3);
-        height: 180px;
+        height: 400px;
         border-radius: 6px;
 
         overflow: hidden;
