@@ -32,6 +32,13 @@ const Container = styled.div`
     .header-logo {
         margin-right: 6px;
     }
+    .header-right-wrapper {
+        display: flex;
+        align-items: center;
+        .header-album {
+            margin-right: 20px;
+        }
+    }
 `;
 
 const Header: React.FC = () => {
@@ -44,11 +51,13 @@ const Header: React.FC = () => {
             </Link>
             {!isLogged && <HeaderAuths />}
             {isLogged && (
-                <Link href="/album">
-                    <AlbumIcon fill="skyblue" className="header-album" />
-                </Link>
+                <div className="header-right-wrapper">
+                    <Link href="/album">
+                        <AlbumIcon fill="skyblue" className="header-album" />
+                    </Link>
+                    <HeaderUserProfile />
+                </div>
             )}
-            {isLogged && <HeaderUserProfile />}
         </Container>
     );
 };
