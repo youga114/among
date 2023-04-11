@@ -18,6 +18,10 @@ const Container = styled.form`
     padding: 32px;
     background-color: white;
     z-index: 11;
+    @media (max-width: 800px) {
+        width: 100%;
+        height: 50vh;
+    }
 
     .mordal-close-x-icon {
         cursor: pointer;
