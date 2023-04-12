@@ -9,8 +9,7 @@ import { useDispatch } from "react-redux";
 
 const Container = styled.div`
     width: 100%;
-    height: 100%;
-    padding: 20px 80px 0px 80px;
+    height: calc(100vh - 80px);
     display: flex;
     flex-direction: column;
     .home-title {
@@ -18,6 +17,7 @@ const Container = styled.div`
         display: flex;
         flex-direction: column;
         justify-content: center;
+        height: 60px;
         width: 100%;
         text-align: center;
         h2 {
@@ -34,7 +34,7 @@ const Container = styled.div`
     }
     .home-photo-container {
         width: 100%;
-        height: calc(100vh - 260px);
+        height: 100%;
         position: relative;
         overflow: hidden;
         background-color: black;
