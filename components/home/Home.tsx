@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { useSelector } from "../../store";
-import SearchRoomBar from "./searchRoomBar/SearchRoomBar";
 import RegisterPhotoIcon from "../../public/static/svg/register/photo/register_main_photo.svg";
 import { uploadFileAPI } from "../../lib/api/file";
 import { mainPhotoActions } from "../../store/mainPhoto";

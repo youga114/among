@@ -12,6 +12,7 @@ import registerRoom from "./registerRoom";
 import searchRoom from "./searchRoom";
 import room from "./room";
 import mainPhoto from "./mainPhoto";
+import album from "./album";
 
 const rootReducer = combineReducers({
     common: common.reducer,
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
     searchRoom: searchRoom.reducer,
     room: room.reducer,
     mainPhoto: mainPhoto.reducer,
+    album: album.reducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
