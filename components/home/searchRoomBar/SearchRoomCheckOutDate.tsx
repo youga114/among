@@ -50,7 +50,7 @@ const Container = styled.div`
     }
     .search-room-bar-button-wrapper {
         position: absolute;
-        right: calc(-100% + 100px);
+        right: 0px;
         top: 12px;
     }
 `;

@@ -100,7 +100,6 @@ const Home: React.FC = () => {
 
     return (
         <Container>
-            {isLogged && <SearchRoomBar />}
             <div className="home-title">
                 <h2>처음 만난 날</h2>
                 <h3>
