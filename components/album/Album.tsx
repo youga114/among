@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useSelector } from "../../store";
+import Link from "next/link";
 
 const Container = styled.div`
     width: 100%;
@@ -49,26 +50,26 @@ const Container = styled.div`
 `;
 
 const Album: React.FC = () => {
-    const isLogged = useSelector((state) => state.user.isLogged);
     const pages = useSelector((state) => state.album.pages);
 
     return (
         <Container>
-            {isLogged &&
-                pages.map((page, index) => {
-                    return (
-                        <div className="album-photo-container" key={index}>
-                            <div className="album-photo-container-text">
-                                <h2>{page.date}</h2>
-                                <h1>{page.content}</h1>
-                                <h2>{page.location}</h2>
-                            </div>
-                            {page.photos.length > 0 && (
-                                <img src={page.photos[0]} alt="" />
-                            )}
+            {pages.map((page, index) => {
+                return (
+                    <div className="album-photo-container" key={index}>
+                        <div className="album-photo-container-text">
+                            <h2>{page.date}</h2>
+                            <h1>{page.content}</h1>
+                            <h2>{page.location}</h2>
                         </div>
-                    );
-                })}
+                        {page.photos.length > 0 && (
+                            <Link href={"/album/" + index}>
+                                <img src={page.photos[0]} alt="" />
+                            </Link>
+                        )}
+                    </div>
+                );
+            })}
         </Container>
     );
 };
