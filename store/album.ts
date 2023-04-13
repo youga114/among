@@ -9,7 +9,7 @@ type photosType = {
 const initialState: { photos: photosType } = {
     photos: [
         {
-            src: "https://newbie-bucket.s3.ap-northeast-2.amazonaws.com/main.png",
+            src: "/static/image/test.jpg",
             date: "20120102",
             content: "내용",
         },

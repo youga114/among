@@ -30,9 +30,9 @@ const Album: React.FC = () => {
     return (
         <Container>
             {isLogged &&
-                photos.map((photo) => {
+                photos.map((photo, index) => {
                     return (
-                        <div className="album-photo-container">
+                        <div className="album-photo-container" key={index}>
                             <img src={photo.src} alt="" />
                         </div>
                     );
