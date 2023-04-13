@@ -38,8 +38,10 @@ const Container = styled.div`
         overflow: hidden;
         background-color: black;
         img {
+            object-fit: cover;
             position: absolute;
-            height: 100%;
+            height: auto;
+            width: 100%;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -65,6 +67,7 @@ const Container = styled.div`
                 background-color: white;
                 cursor: pointer;
                 outline: none;
+                margin-left: 15px;
             }
         }
     }
