@@ -23,11 +23,7 @@ const initialState: RegisterRoomState = {
     longitude: 0,
     amentities: [],
     conveniences: [],
-    photos: [
-        "https://newbie-bucket.s3.ap-northeast-2.amazonaws.com/539d0d93111f8b5f4acec9201",
-        "https://newbie-bucket.s3.ap-northeast-2.amazonaws.com/539d0d93111f8b5f4acec9201",
-        "https://newbie-bucket.s3.ap-northeast-2.amazonaws.com/539d0d93111f8b5f4acec9201",
-    ],
+    photos: [],
     description: "",
     title: "",
     price: 0,

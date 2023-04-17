@@ -11,7 +11,7 @@ import GrayPlusIcon from "../../../public/static/svg/register/photo/gray_plus.sv
 
 const Container = styled.ul`
     .register-room-first-photo-wrapper {
-        width: 858px;
+        width: 100%;
         height: 433px;
         margin: 0 auto 24px;
         position: relative;
