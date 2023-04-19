@@ -64,7 +64,7 @@ const RegisterRoomFooter: React.FC<IProps> = ({
                 뒤로
             </Link>
             <Link href={nextHref || ""}>
-                <Button onClick={onClickNext}>계속</Button>
+                <Button onClick={onClickNext}>등록</Button>
             </Link>
         </Container>
     );

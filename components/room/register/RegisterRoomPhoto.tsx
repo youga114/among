@@ -10,6 +10,8 @@ import { useDispatch } from "react-redux";
 import { registerRoomActions } from "../../../store/registerRoom";
 import RegisterRoomPhotoCardList from "./RegisterRoomPhotoCardList";
 import RegisterRoomFooter from "./RegisterRoomFooter";
+import { uploadJsonAPI } from "../../../lib/api/json";
+import { resolve } from "path";
 
 const Container = styled.div`
     padding: 62px 30px 100px;
@@ -62,19 +64,24 @@ const RegisterRoomPhoto: React.FC = () => {
     const uploadImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const { files } = event.target;
         if (files && files.length > 0) {
-            for (let i = 0; i < files.length; ++i) {
-                const file = files[0];
-                const formdata = new FormData();
-                formdata.append("file", file);
-                try {
-                    const { data } = await uploadFileAPI(formdata);
-                    if (data) {
-                        dispatch(registerRoomActions.setPhotos([...photos, data]));
-                    }
-                } catch (e) {
-                    console.log(e);
-                }
-            }
+            let uploadFileAPIs = [];
+            let uploadFileNames: any[] = ["testData", "testData2"];
+            // for (let i = 0; i < files.length; ++i) {
+            //     const file = files[0];
+            //     const formdata = new FormData();
+            //     formdata.append("file", file);
+            //     uploadFileAPIs.push(async () => {
+            //         try {
+            //             const fileName = await uploadFileAPI(formdata);
+            //             uploadFileNames.push(fileName);
+            //         } catch (e) {
+            //             console.log(e);
+            //         }
+            //     })
+            // }
+            // await Promise.all(uploadFileAPIs);
+            // dispatch(registerRoomActions.setPhotos([...photos, ...uploadFileNames]));
+            await uploadJsonAPI({photos: [...photos, ...uploadFileNames]});
         }
     };
 
@@ -97,8 +104,8 @@ const RegisterRoomPhoto: React.FC = () => {
             )}
             {!isEmpty(photos) && <RegisterRoomPhotoCardList photos={photos} />}
             <RegisterRoomFooter
-                prevHref="/room/register/conveniences"
-                nextHref="/room/register/description"
+                prevHref="/"
+                nextHref="/album"
             />
         </Container>
     );
