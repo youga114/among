@@ -20,7 +20,7 @@ const Container = styled.form`
     z-index: 11;
     @media (max-width: 800px) {
         width: 100%;
-        height: 50vh;
+        height: 400px;
     }
 
     .mordal-close-x-icon {

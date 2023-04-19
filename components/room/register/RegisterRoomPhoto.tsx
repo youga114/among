@@ -62,23 +62,25 @@ const RegisterRoomPhoto: React.FC = () => {
     const uploadImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const { files } = event.target;
         if (files && files.length > 0) {
-            const file = files[0];
-            const formdata = new FormData();
-            formdata.append("file", file);
-            try {
-                const { data } = await uploadFileAPI(formdata);
-                if (data) {
-                    dispatch(registerRoomActions.setPhotos([...photos, data]));
+            for (let i = 0; i < files.length; ++i) {
+                const file = files[0];
+                const formdata = new FormData();
+                formdata.append("file", file);
+                try {
+                    const { data } = await uploadFileAPI(formdata);
+                    if (data) {
+                        dispatch(registerRoomActions.setPhotos([...photos, data]));
+                    }
+                } catch (e) {
+                    console.log(e);
                 }
-            } catch (e) {
-                console.log(e);
             }
         }
     };
 
     return (
         <Container>
-            <p className="register-room-step-info">2012년 3월 1일</p>
+            <p className="register-room-step-info"></p>
             {isEmpty(photos) && (
                 <div className="register-room-upload-photo-wrapper">
                     <>
