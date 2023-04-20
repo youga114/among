@@ -56,13 +56,25 @@ const Container = styled.div`
 `;
 
 const RegisterPhoto: React.FC = () => {
-    const [photos, setPhotos] = useState<FileList | null>(null);
+    const [photos, setPhotos] = useState<File[]>([]);
 
     const onChangePhotos = async (
         event: React.ChangeEvent<HTMLInputElement>
     ) => {
         const { files } = event.target;
-        setPhotos(files);
+        files && setPhotos(Array.from(files));
+    };
+
+    const addPhoto = () => {
+        const el = document.createElement("input");
+        el.type = "file";
+        el.accept = "image/*";
+        el.multiple = true;
+        el.onchange = (event) => {
+            const { files } = event.target as HTMLInputElement;
+            files && setPhotos([...photos, ...Array.from(files)]);
+        };
+        el.click();
     };
 
     const uploadPage = async () => {
@@ -99,13 +111,14 @@ const RegisterPhoto: React.FC = () => {
     return (
         <Container>
             <p className="register-room-step-info"></p>
-            {!photos && (
+            {photos.length <= 0 && (
                 <div className="register-room-upload-photo-wrapper">
                     <>
                         <input
                             type="file"
                             accept="image/*"
                             onChange={onChangePhotos}
+                            multiple
                         />
                         <Button icon={<UploadIcon />} width="167px">
                             사진 업로드
@@ -113,7 +126,9 @@ const RegisterPhoto: React.FC = () => {
                     </>
                 </div>
             )}
-            {photos && <RegisterPhotoCardList photos={photos} />}
+            {photos.length > 0 && (
+                <RegisterPhotoCardList photos={photos} addPhoto={addPhoto} />
+            )}
             <RegisterPhotoFooter prevHref="/" nextHref="/album" />
         </Container>
     );

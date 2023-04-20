@@ -1,4 +1,4 @@
-import React from "react";
+import React, { MouseEventHandler } from "react";
 import styled from "styled-components";
 import palette from "../../styles/palette";
 import { useDispatch } from "react-redux";
@@ -57,13 +57,13 @@ const Container = styled.ul`
         }
     }
 
-    li:nth-child(3n + 1) {
+    li:nth-child(2n + 1) {
         margin-right: 0;
     }
     .register-room-photo-card {
         position: relative;
         display: inline-block;
-        width: calc((100% - 48px) / 3);
+        width: calc((100% - 48px) / 2);
         height: 400px;
         border-radius: 6px;
 
@@ -104,34 +104,12 @@ const Container = styled.ul`
     }
 `;
 interface IProps {
-    photos: FileList;
+    photos: File[];
+    addPhoto: MouseEventHandler<HTMLElement>;
 }
 
-const RegisterPhotoCardList: React.FC<IProps> = ({ photos }) => {
+const RegisterPhotoCardList: React.FC<IProps> = ({ photos, addPhoto }) => {
     const dispatch = useDispatch();
-
-    const addPhoto = () => {
-        const el = document.createElement("input");
-        el.type = "file";
-        el.accept = "image/*";
-        el.onchange = (event) => {
-            const { files } = event.target as HTMLInputElement;
-            if (files && files.length > 0) {
-                const file = files[0];
-                const formData = new FormData();
-                formData.append("file", file);
-                uploadFileAPI(formData)
-                    .then(({ data }) => {
-                        // dispatch(
-                        //     registerRoomActions.setPhotos([...photos, data])
-                        // );
-                    })
-                    .catch((e) => console.log(e));
-            }
-        };
-
-        el.click();
-    };
 
     const deletePhoto = (index: number) => {
         // const newPhotos = [...photos];
@@ -161,7 +139,7 @@ const RegisterPhotoCardList: React.FC<IProps> = ({ photos }) => {
 
     return (
         <Container>
-            {Array.from(photos).map((photo, index) => (
+            {photos.map((photo, index) => (
                 <React.Fragment key={index}>
                     {index === 0 && (
                         <li className="register-room-first-photo-wrapper">
