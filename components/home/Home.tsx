@@ -77,7 +77,7 @@ const Home: React.FC = () => {
     const isLogged = useSelector((state) => state.user.isLogged);
 
     const today = new Date();
-    const metDay = new Date(2021, 11, 19);
+    const metDay = new Date("2021-11-19");
 
     const dispatch = useDispatch();
 
