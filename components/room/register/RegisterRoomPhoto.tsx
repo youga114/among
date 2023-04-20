@@ -81,7 +81,18 @@ const RegisterRoomPhoto: React.FC = () => {
             // }
             // await Promise.all(uploadFileAPIs);
             // dispatch(registerRoomActions.setPhotos([...photos, ...uploadFileNames]));
-            await uploadJsonAPI({photos: [...photos, ...uploadFileNames]});
+
+            await uploadJsonAPI({
+                fileName: "photos.json",
+                data: [
+                    {
+                        date: "",
+                        content: "",
+                        location: "",
+                        photos: [...photos, ...uploadFileNames]
+                    }
+                ]
+            });
         }
     };
 
@@ -103,10 +114,7 @@ const RegisterRoomPhoto: React.FC = () => {
                 </div>
             )}
             {!isEmpty(photos) && <RegisterRoomPhotoCardList photos={photos} />}
-            <RegisterRoomFooter
-                prevHref="/"
-                nextHref="/album"
-            />
+            <RegisterRoomFooter prevHref="/" nextHref="/album" />
         </Container>
     );
 };

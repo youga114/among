@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-type pagesType = {
+export type pagesType = {
     date: string;
     content: string;
     location: string;
@@ -18,34 +18,34 @@ const initialState: { pages: pagesType } = {
                 "/static/image/test.jpg",
                 "/static/image/test.jpg",
                 "/static/image/test.jpg",
-                "/static/image/test.jpg",
-            ],
+                "/static/image/test.jpg"
+            ]
         },
         {
             date: "2012년 01월 02일",
             content: "내용",
             location: "서울시 관악구 청룡동",
-            photos: ["/static/image/test2.jpg"],
+            photos: ["/static/image/test2.jpg"]
         },
         {
             date: "2012년 01월 02일",
             content: "내용",
             location: "서울시 관악구 청룡동",
-            photos: ["/static/image/test.jpg"],
+            photos: ["/static/image/test.jpg"]
         },
         {
             date: "2012년 01월 02일",
             content: "내용",
             location: "서울시 관악구 청룡동",
-            photos: ["/static/image/test2.jpg"],
+            photos: ["/static/image/test2.jpg"]
         },
         {
             date: "2012년 01월 02일",
             content: "내용",
             location: "서울시 관악구 청룡동",
-            photos: ["/static/image/test.jpg"],
-        },
-    ],
+            photos: ["/static/image/test.jpg"]
+        }
+    ]
 };
 
 const album = createSlice({
@@ -54,8 +54,8 @@ const album = createSlice({
     reducers: {
         setPhotos(state, action: PayloadAction<pagesType>) {
             state.pages = action.payload;
-        },
-    },
+        }
+    }
 });
 
 export const photoActions = { ...album.actions };
