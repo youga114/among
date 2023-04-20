@@ -63,7 +63,7 @@ const Album: React.FC = () => {
                             <h2>{page.location}</h2>
                         </div>
                         {page.photos.length > 0 && (
-                            <Link href={"/album/" + index}>
+                            <Link href={"/album/page/" + index}>
                                 <img src={page.photos[0]} alt="" />
                             </Link>
                         )}

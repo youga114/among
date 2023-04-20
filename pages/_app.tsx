@@ -1,5 +1,5 @@
 import App, { AppContext, AppProps } from "next/app";
-import Header from "../components/Header";
+import Header from "../components/header/Header";
 import GlobalStyle from "../styles/GlobalStyle";
 import { wrapper } from "../store";
 import { Provider } from "react-redux";
