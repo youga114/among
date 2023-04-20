@@ -52,6 +52,6 @@ const album = createSlice({
     }
 });
 
-export const photoActions = { ...album.actions };
+export const albumActions = { ...album.actions };
 
 export default album;

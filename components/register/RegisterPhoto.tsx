@@ -11,6 +11,7 @@ import RegisterPhotoCardList from "./RegisterPhotoCardList";
 import RegisterPhotoFooter from "./RegisterPhotoFooter";
 import { uploadJsonAPI } from "../../lib/api/json";
 import { resolve } from "path";
+import { registerPageActions } from "../../store/registerPage";
 
 const Container = styled.div`
     padding: 62px 30px 100px;
@@ -56,25 +57,21 @@ const Container = styled.div`
 `;
 
 const RegisterPhoto: React.FC = () => {
-    const [photos, setPhotos] = useState<File[]>([]);
+    const dispatch = useDispatch();
+    const registerPage = useSelector((state) => state.registerPage.page);
 
     const onChangePhotos = async (
         event: React.ChangeEvent<HTMLInputElement>
     ) => {
         const { files } = event.target;
-        files && setPhotos(Array.from(files));
-    };
-
-    const addPhoto = () => {
-        const el = document.createElement("input");
-        el.type = "file";
-        el.accept = "image/*";
-        el.multiple = true;
-        el.onchange = (event) => {
-            const { files } = event.target as HTMLInputElement;
-            files && setPhotos([...photos, ...Array.from(files)]);
-        };
-        el.click();
+        if (files) {
+            dispatch(
+                registerPageActions.setRegisterPage({
+                    ...registerPage,
+                    photos: [...registerPage.photos, ...Array.from(files)]
+                })
+            );
+        }
     };
 
     const uploadPage = async () => {
@@ -111,7 +108,7 @@ const RegisterPhoto: React.FC = () => {
     return (
         <Container>
             <p className="register-room-step-info"></p>
-            {photos.length <= 0 && (
+            {registerPage.photos.length <= 0 && (
                 <div className="register-room-upload-photo-wrapper">
                     <>
                         <input
@@ -126,9 +123,7 @@ const RegisterPhoto: React.FC = () => {
                     </>
                 </div>
             )}
-            {photos.length > 0 && (
-                <RegisterPhotoCardList photos={photos} addPhoto={addPhoto} />
-            )}
+            {registerPage.photos.length > 0 && <RegisterPhotoCardList />}
             <RegisterPhotoFooter prevHref="/" nextHref="/album" />
         </Container>
     );

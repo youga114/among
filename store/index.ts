@@ -9,12 +9,14 @@ import { ToolkitStore } from "@reduxjs/toolkit/dist/configureStore";
 import common from "./common";
 import auth from "./auth";
 import album from "./album";
+import registerPage from "./registerPage";
 
 const rootReducer = combineReducers({
     common: common.reducer,
     user: user.reducer,
     auth: auth.reducer,
-    album: album.reducer
+    album: album.reducer,
+    registerPage: registerPage.reducer
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

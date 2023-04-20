@@ -7,6 +7,8 @@ import { uploadFileAPI } from "../../lib/api/file";
 import PencilIcon from "../../public/static/svg/register/photo/pencil.svg";
 import TrashCanIcon from "../../public/static/svg/register/photo/trash_can.svg";
 import GrayPlusIcon from "../../public/static/svg/register/photo/gray_plus.svg";
+import { useSelector } from "../../store";
+import { registerPageActions } from "../../store/registerPage";
 
 const Container = styled.ul`
     .register-room-first-photo-wrapper {
@@ -103,13 +105,29 @@ const Container = styled.ul`
         }
     }
 `;
-interface IProps {
-    photos: File[];
-    addPhoto: MouseEventHandler<HTMLElement>;
-}
 
-const RegisterPhotoCardList: React.FC<IProps> = ({ photos, addPhoto }) => {
+const RegisterPhotoCardList: React.FC = () => {
     const dispatch = useDispatch();
+    const registerPage = useSelector((state) => state.registerPage.page);
+
+    const addPhoto = () => {
+        const el = document.createElement("input");
+        el.type = "file";
+        el.accept = "image/*";
+        el.multiple = true;
+        el.onchange = (event) => {
+            const { files } = event.target as HTMLInputElement;
+            if (files) {
+                dispatch(
+                    registerPageActions.setRegisterPage({
+                        ...registerPage,
+                        photos: [...registerPage.photos, ...Array.from(files)]
+                    })
+                );
+            }
+        };
+        el.click();
+    };
 
     const deletePhoto = (index: number) => {
         // const newPhotos = [...photos];
@@ -139,7 +157,7 @@ const RegisterPhotoCardList: React.FC<IProps> = ({ photos, addPhoto }) => {
 
     return (
         <Container>
-            {photos.map((photo, index) => (
+            {registerPage.photos.map((photo, index) => (
                 <React.Fragment key={index}>
                     {index === 0 && (
                         <li className="register-room-first-photo-wrapper">
