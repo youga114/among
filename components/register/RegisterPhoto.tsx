@@ -65,10 +65,14 @@ const RegisterPhoto: React.FC = () => {
     ) => {
         const { files } = event.target;
         if (files) {
+            const filesUrl = [];
+            for (let i = 0; i < files?.length ?? 1; ++i) {
+                filesUrl.push(URL.createObjectURL(files[i]));
+            }
             dispatch(
                 registerPageActions.setRegisterPage({
                     ...registerPage,
-                    photos: [...registerPage.photos, ...Array.from(files)]
+                    photos: [...registerPage.photos, ...filesUrl]
                 })
             );
         }

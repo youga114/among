@@ -118,10 +118,14 @@ const RegisterPhotoCardList: React.FC = () => {
         el.onchange = (event) => {
             const { files } = event.target as HTMLInputElement;
             if (files) {
+                const filesUrl = [];
+                for (let i = 0; i < files?.length ?? 1; ++i) {
+                    filesUrl.push(URL.createObjectURL(files[i]));
+                }
                 dispatch(
                     registerPageActions.setRegisterPage({
                         ...registerPage,
-                        photos: [...registerPage.photos, ...Array.from(files)]
+                        photos: [...registerPage.photos, ...filesUrl]
                     })
                 );
             }
@@ -161,7 +165,7 @@ const RegisterPhotoCardList: React.FC = () => {
                 <React.Fragment key={index}>
                     {index === 0 && (
                         <li className="register-room-first-photo-wrapper">
-                            <img src={URL.createObjectURL(photo)} alt="" />
+                            <img src={photo} alt="" />
                             <div className="register-room-photo-interaction-buttons">
                                 <button
                                     type="button"
@@ -184,7 +188,7 @@ const RegisterPhotoCardList: React.FC = () => {
                     )}
                     {index !== 0 && (
                         <li className="register-room-photo-card">
-                            <img src={URL.createObjectURL(photo)} alt="" />
+                            <img src={photo} alt="" />
                             <div className="register-room-photo-interaction-buttons">
                                 <button
                                     type="button"

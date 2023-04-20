@@ -1,14 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { pageType } from "../types/page";
 
-type registerPageType = {
-    date: string;
-    content: string;
-    location: string;
-    photos: File[];
-};
-
-const initialState: { page: registerPageType } = {
+const initialState: { page: pageType } = {
     page: {
         date: "",
         content: "",
@@ -21,7 +14,7 @@ const registerPage = createSlice({
     name: "registerPage",
     initialState,
     reducers: {
-        setRegisterPage(state, action: PayloadAction<registerPageType>) {
+        setRegisterPage(state, action: PayloadAction<pageType>) {
             state.page = action.payload;
         },
         initRegisterPage(state) {
