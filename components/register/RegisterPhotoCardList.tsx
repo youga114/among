@@ -59,13 +59,13 @@ const Container = styled.ul`
         }
     }
 
-    li:nth-child(2n + 1) {
+    li:nth-child(n + 1) {
         margin-right: 0;
     }
     .register-room-photo-card {
         position: relative;
         display: inline-block;
-        width: calc((100% - 48px) / 2);
+        width: 100%;
         height: 400px;
         border-radius: 6px;
 

@@ -14,12 +14,12 @@ const registerPage = createSlice({
     name: "registerPage",
     initialState,
     reducers: {
-        setRegisterPage(state, action: PayloadAction<pageType>) {
-            state.page = action.payload;
-        },
         initRegisterPage(state) {
             state = initialState;
             return state;
+        },
+        setRegisterPage(state, action: PayloadAction<pageType>) {
+            state.page = action.payload;
         }
     }
 });
