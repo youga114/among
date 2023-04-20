@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { useSelector } from "../../store";
 import RegisterPhotoIcon from "../../public/static/svg/register/photo/register_main_photo.svg";
 import { uploadFileAPI } from "../../lib/api/file";
-import { mainPhotoActions } from "../../store/mainPhoto";
 import { useDispatch } from "react-redux";
 
 const Container = styled.div`
@@ -73,13 +72,14 @@ const Container = styled.div`
     }
 `;
 
+const mainPhotoUrl =
+    "https://newbie-bucket.s3.ap-northeast-2.amazonaws.com/main.png";
+
 const Home: React.FC = () => {
     const isLogged = useSelector((state) => state.user.isLogged);
 
     const today = new Date();
     const metDay = new Date("2021-11-19");
-
-    const dispatch = useDispatch();
 
     const uploadImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const { files } = event.target;
@@ -90,15 +90,11 @@ const Home: React.FC = () => {
             formdata.append("from", "main");
             try {
                 const { data } = await uploadFileAPI(formdata);
-
-                dispatch(mainPhotoActions.setPhoto(data));
             } catch (e) {
                 console.log(e);
             }
         }
     };
-
-    const photo = useSelector((state) => state.mainPhoto.photo);
 
     return (
         <Container>
@@ -115,7 +111,7 @@ const Home: React.FC = () => {
             </div>
             {isLogged && (
                 <div className="home-photo-container">
-                    <img src={photo} alt="" />
+                    <img src={mainPhotoUrl} alt="" />
                     <div className="home-photo-register">
                         <input
                             type="file"

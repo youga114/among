@@ -1,5 +1,5 @@
 import axios from ".";
-import { pagesType } from "../../store/album";
+import { pageType } from "../../types/page";
 
-export const uploadJsonAPI = (body: { fileName: string; data: pagesType }) =>
+export const uploadJsonAPI = (body: { fileName: string; data: pageType[] }) =>
     axios.post("/api/json/upload", body);

@@ -1,9 +1,9 @@
 import React from "react";
 import { NextPage } from "next";
-import RegisterRoomPhoto from "../../components/register/RegisterPhoto";
+import RegisterPhoto from "../../components/register/RegisterPhoto";
 
 const photo: NextPage = () => {
-    return <RegisterRoomPhoto />;
+    return <RegisterPhoto />;
 };
 
 export default photo;

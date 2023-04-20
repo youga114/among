@@ -1,13 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { pageType } from "../types/page";
 
-export type pagesType = {
-    date: string;
-    content: string;
-    location: string;
-    photos: string[];
-}[];
-
-const initialState: { pages: pagesType } = {
+const initialState: { pages: pageType[] } = {
     pages: [
         {
             date: "2012년 01월 02일",
@@ -52,7 +46,7 @@ const album = createSlice({
     name: "album",
     initialState,
     reducers: {
-        setPages(state, action: PayloadAction<pagesType>) {
+        setPages(state, action: PayloadAction<pageType[]>) {
             state.pages = action.payload;
         }
     }

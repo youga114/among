@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import palette from "../../styles/palette";
 import { isEmpty } from "lodash";
@@ -7,8 +7,8 @@ import UploadIcon from "../../public/static/svg/register/upload.svg";
 import Button from "../common/Button";
 import { uploadFileAPI } from "../../lib/api/file";
 import { useDispatch } from "react-redux";
-import RegisterRoomPhotoCardList from "./RegisterPhotoCardList";
-import RegisterRoomFooter from "./RegisterPhotoFooter";
+import RegisterPhotoCardList from "./RegisterPhotoCardList";
+import RegisterPhotoFooter from "./RegisterPhotoFooter";
 import { uploadJsonAPI } from "../../lib/api/json";
 import { resolve } from "path";
 
@@ -56,71 +56,65 @@ const Container = styled.div`
 `;
 
 const RegisterPhoto: React.FC = () => {
-    // const photos = useSelector((state) => state.registerRoom.photos);
+    const [photos, setPhotos] = useState<FileList | null>(null);
 
-    const dispatch = useDispatch();
-
-    const uploadImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const onChangePhotos = async (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
         const { files } = event.target;
-        if (files && files.length > 0) {
-            let filesArr = [];
-            for (let i = 0; i < files.length; ++i) {
-                const file = files[i];
-                filesArr.push(file);
-            }
+        setPhotos(files);
+    };
 
-            // let uploadFileAPIs = [];
-            // let uploadFileNames: any[] = ["testData", "testData2"];
-            // for (let i = 0; i < files.length; ++i) {
-            //     const file = files[0];
-            //     const formdata = new FormData();
-            //     formdata.append("file", file);
-            //     uploadFileAPIs.push(async () => {
-            //         try {
-            //             const fileName = await uploadFileAPI(formdata);
-            //             uploadFileNames.push(fileName);
-            //         } catch (e) {
-            //             console.log(e);
-            //         }
-            //     })
-            // }
-            // await Promise.all(uploadFileAPIs);
-            // dispatch(registerRoomActions.setPhotos([...photos, ...uploadFileNames]));
-
-            // await uploadJsonAPI({
-            //     fileName: "photos.json",
-            //     data: [
-            //         {
-            //             date: "",
-            //             content: "",
-            //             location: "",
-            //             photos: [...photos, ...uploadFileNames]
-            //         }
-            //     ]
-            // });
-        }
+    const uploadPage = async () => {
+        // let uploadFileAPIs = [];
+        // let uploadFileNames: any[] = ["testData", "testData2"];
+        // for (let i = 0; i < files.length; ++i) {
+        //     const file = files[0];
+        //     const formdata = new FormData();
+        //     formdata.append("file", file);
+        //     uploadFileAPIs.push(async () => {
+        //         try {
+        //             const fileName = await uploadFileAPI(formdata);
+        //             uploadFileNames.push(fileName);
+        //         } catch (e) {
+        //             console.log(e);
+        //         }
+        //     })
+        // }
+        // await Promise.all(uploadFileAPIs);
+        // dispatch(registerRoomActions.setPhotos([...photos, ...uploadFileNames]));
+        // await uploadJsonAPI({
+        //     fileName: "photos.json",
+        //     data: [
+        //         {
+        //             date: "",
+        //             content: "",
+        //             location: "",
+        //             photos: [...photos, ...uploadFileNames]
+        //         }
+        //     ]
+        // });
     };
 
     return (
         <Container>
             <p className="register-room-step-info"></p>
-            {/* {isEmpty(photos) && ( */}
-            {
+            {!photos && (
                 <div className="register-room-upload-photo-wrapper">
                     <>
                         <input
                             type="file"
                             accept="image/*"
-                            onChange={uploadImage}
+                            onChange={onChangePhotos}
                         />
                         <Button icon={<UploadIcon />} width="167px">
                             사진 업로드
                         </Button>
                     </>
                 </div>
-            }
-            {/* {!isEmpty(photos) && <RegisterRoomPhotoCardList photos={photos} />} */}
-            <RegisterRoomFooter prevHref="/" nextHref="/album" />
+            )}
+            {photos && <RegisterPhotoCardList photos={photos} />}
+            <RegisterPhotoFooter prevHref="/" nextHref="/album" />
         </Container>
     );
 };

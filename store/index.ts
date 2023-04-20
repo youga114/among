@@ -8,14 +8,12 @@ import user from "./user";
 import { ToolkitStore } from "@reduxjs/toolkit/dist/configureStore";
 import common from "./common";
 import auth from "./auth";
-import mainPhoto from "./mainPhoto";
 import album from "./album";
 
 const rootReducer = combineReducers({
     common: common.reducer,
     user: user.reducer,
     auth: auth.reducer,
-    mainPhoto: mainPhoto.reducer,
     album: album.reducer
 });
 

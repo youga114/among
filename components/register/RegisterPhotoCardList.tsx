@@ -4,9 +4,9 @@ import palette from "../../styles/palette";
 import { useDispatch } from "react-redux";
 import { uploadFileAPI } from "../../lib/api/file";
 
-import PencilIcon from "../../../public/static/svg/register/photo/pencil.svg";
-import TrashCanIcon from "../../../public/static/svg/register/photo/trash_can.svg";
-import GrayPlusIcon from "../../../public/static/svg/register/photo/gray_plus.svg";
+import PencilIcon from "../../public/static/svg/register/photo/pencil.svg";
+import TrashCanIcon from "../../public/static/svg/register/photo/trash_can.svg";
+import GrayPlusIcon from "../../public/static/svg/register/photo/gray_plus.svg";
 
 const Container = styled.ul`
     .register-room-first-photo-wrapper {
@@ -104,10 +104,10 @@ const Container = styled.ul`
     }
 `;
 interface IProps {
-    photos: string[];
+    photos: FileList;
 }
 
-const RegisterRoomPhotoCardList: React.FC<IProps> = ({ photos }) => {
+const RegisterPhotoCardList: React.FC<IProps> = ({ photos }) => {
     const dispatch = useDispatch();
 
     const addPhoto = () => {
@@ -134,8 +134,8 @@ const RegisterRoomPhotoCardList: React.FC<IProps> = ({ photos }) => {
     };
 
     const deletePhoto = (index: number) => {
-        const newPhotos = [...photos];
-        newPhotos.splice(index, 1);
+        // const newPhotos = [...photos];
+        // newPhotos.splice(index, 1);
         // dispatch(registerRoomActions.setPhotos(newPhotos));
     };
 
@@ -149,8 +149,8 @@ const RegisterRoomPhotoCardList: React.FC<IProps> = ({ photos }) => {
                 formData.append("file", file);
                 uploadFileAPI(formData)
                     .then(({ data }) => {
-                        const newPhotos = [...photos];
-                        newPhotos[index] = data;
+                        // const newPhotos = [...photos];
+                        // newPhotos[index] = data;
                         // dispatch(registerRoomActions.setPhotos(newPhotos));
                     })
                     .catch((e) => console.log(e.message));
@@ -161,11 +161,11 @@ const RegisterRoomPhotoCardList: React.FC<IProps> = ({ photos }) => {
 
     return (
         <Container>
-            {photos.map((photo, index) => (
+            {Array.from(photos).map((photo, index) => (
                 <React.Fragment key={index}>
                     {index === 0 && (
                         <li className="register-room-first-photo-wrapper">
-                            <img src={photo} alt="" />
+                            <img src={URL.createObjectURL(photo)} alt="" />
                             <div className="register-room-photo-interaction-buttons">
                                 <button
                                     type="button"
@@ -188,7 +188,7 @@ const RegisterRoomPhotoCardList: React.FC<IProps> = ({ photos }) => {
                     )}
                     {index !== 0 && (
                         <li className="register-room-photo-card">
-                            <img src={photo} alt="" />
+                            <img src={URL.createObjectURL(photo)} alt="" />
                             <div className="register-room-photo-interaction-buttons">
                                 <button
                                     type="button"
@@ -225,4 +225,4 @@ const RegisterRoomPhotoCardList: React.FC<IProps> = ({ photos }) => {
     );
 };
 
-export default RegisterRoomPhotoCardList;
+export default RegisterPhotoCardList;
