@@ -41,7 +41,6 @@ const Container = styled.div`
         align-items: center;
         border: 2px dashed ${palette.gray_bb};
         border-radius: 6px;
-
         input {
             position: absolute;
             width: 100%;
@@ -50,8 +49,9 @@ const Container = styled.div`
             cursor: pointer;
         }
         img {
+            object-fit: cover;
+            height: auto;
             width: 100%;
-            max-height: 100%;
         }
     }
 `;

@@ -20,6 +20,9 @@ const registerPage = createSlice({
         },
         setRegisterPage(state, action: PayloadAction<pageType>) {
             state.page = action.payload;
+        },
+        setPhotos(state, action: PayloadAction<string[]>) {
+            state.page.photos = action.payload;
         }
     }
 });

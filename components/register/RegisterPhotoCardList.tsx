@@ -13,7 +13,7 @@ import { registerPageActions } from "../../store/registerPage";
 const Container = styled.ul`
     .register-room-first-photo-wrapper {
         width: 100%;
-        height: 433px;
+        height: 400px;
         margin: 0 auto 24px;
         position: relative;
         display: flex;
@@ -21,6 +21,7 @@ const Container = styled.ul`
         align-items: center;
         border-radius: 6px;
         overflow: hidden;
+        background-color: black;
         &:hover {
             .register-room-photo-interaction-buttons {
                 display: flex;
@@ -34,8 +35,9 @@ const Container = styled.ul`
             cursor: pointer;
         }
         img {
+            object-fit: cover;
+            height: auto;
             width: 100%;
-            max-height: 100%;
         }
     }
 
@@ -64,11 +66,13 @@ const Container = styled.ul`
     }
     .register-room-photo-card {
         position: relative;
-        display: inline-block;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         width: 100%;
         height: 400px;
         border-radius: 6px;
-
+        background-color: black;
         overflow: hidden;
         margin-right: 24px;
         margin-bottom: 24px;
@@ -78,11 +82,9 @@ const Container = styled.ul`
             }
         }
         img {
-            position: absolute;
-            top: 0;
-            left: 0;
+            object-fit: cover;
+            height: auto;
             width: 100%;
-            height: 100%;
         }
     }
     .register-room-add-more-photo-card {
@@ -96,13 +98,7 @@ const Container = styled.ul`
         border-radius: 6px;
         cursor: pointer;
         overflow: hidden;
-        margin-right: 24px;
-        margin-bottom: 24px;
         display: flex;
-
-        svg {
-            margin-bottom: 12px;
-        }
     }
 `;
 
@@ -134,9 +130,9 @@ const RegisterPhotoCardList: React.FC = () => {
     };
 
     const deletePhoto = (index: number) => {
-        // const newPhotos = [...photos];
-        // newPhotos.splice(index, 1);
-        // dispatch(registerRoomActions.setPhotos(newPhotos));
+        const newPhotos = [...registerPage.photos];
+        newPhotos.splice(index, 1);
+        dispatch(registerPageActions.setPhotos(newPhotos));
     };
 
     const editPhoto = (index: number) => {
@@ -145,15 +141,9 @@ const RegisterPhotoCardList: React.FC = () => {
         el.onchange = (event) => {
             const file = (event.target as HTMLInputElement)?.files?.[0];
             if (file) {
-                const formData = new FormData();
-                formData.append("file", file);
-                uploadFileAPI(formData)
-                    .then(({ data }) => {
-                        // const newPhotos = [...photos];
-                        // newPhotos[index] = data;
-                        // dispatch(registerRoomActions.setPhotos(newPhotos));
-                    })
-                    .catch((e) => console.log(e.message));
+                const newPhotos = [...registerPage.photos];
+                newPhotos[index] = URL.createObjectURL(file);
+                dispatch(registerPageActions.setPhotos(newPhotos));
             }
         };
         el.click();
@@ -218,7 +208,6 @@ const RegisterPhotoCardList: React.FC = () => {
             >
                 <div className="register-room-add-more-photo-card">
                     <GrayPlusIcon />
-                    추가하기
                 </div>
             </li>
         </Container>
