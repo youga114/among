@@ -9,7 +9,6 @@ import RegisterPhotoCardList from "./RegisterPhotoCardList";
 import RegisterPhotoFooter from "./RegisterPhotoFooter";
 import { registerPageActions } from "../../store/registerPage";
 import Input from "../common/Input";
-import { getFileMetadataAPI } from "../../lib/api/metadata";
 import EXIF from "exif-js";
 
 const Container = styled.div`
