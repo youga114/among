@@ -68,6 +68,37 @@ const RegisterRoomFooter: React.FC<IProps> = ({
         // }
     };
 
+    const uploadPage = async () => {
+        // let uploadFileAPIs = [];
+        // let uploadFileNames: any[] = ["testData", "testData2"];
+        // for (let i = 0; i < files.length; ++i) {
+        //     const file = files[0];
+        //     const formdata = new FormData();
+        //     formdata.append("file", file);
+        //     uploadFileAPIs.push(async () => {
+        //         try {
+        //             const fileName = await uploadFileAPI(formdata);
+        //             uploadFileNames.push(fileName);
+        //         } catch (e) {
+        //             console.log(e);
+        //         }
+        //     })
+        // }
+        // await Promise.all(uploadFileAPIs);
+        // dispatch(registerRoomActions.setPhotos([...photos, ...uploadFileNames]));
+        // await uploadJsonAPI({
+        //     fileName: "photos.json",
+        //     data: [
+        //         {
+        //             date: "",
+        //             content: "",
+        //             location: "",
+        //             photos: [...photos, ...uploadFileNames]
+        //         }
+        //     ]
+        // });
+    };
+
     return (
         <Container>
             <Link href={prevHref || ""} className="register-room-footer-back">

@@ -1,20 +1,17 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import palette from "../../styles/palette";
-import { isEmpty } from "lodash";
 import { useSelector } from "../../store";
 import UploadIcon from "../../public/static/svg/register/upload.svg";
 import Button from "../common/Button";
-import { uploadFileAPI } from "../../lib/api/file";
 import { useDispatch } from "react-redux";
 import RegisterPhotoCardList from "./RegisterPhotoCardList";
 import RegisterPhotoFooter from "./RegisterPhotoFooter";
-import { uploadJsonAPI } from "../../lib/api/json";
-import { resolve } from "path";
 import { registerPageActions } from "../../store/registerPage";
+import Input from "../common/Input";
 
 const Container = styled.div`
-    padding: 62px 30px 100px;
+    padding: 22px 30px 100px;
     h2 {
         font-size: 19px;
         font-weight: 800;
@@ -26,9 +23,13 @@ const Container = styled.div`
         margin-bottom: 6px;
     }
     .register-room-step-info {
-        font-size: 14px;
+        font-size: 18px;
         max-width: 400px;
         margin-bottom: 24px;
+        font-weight: bolder;
+    }
+    .register-input {
+        margin: 10px 0 20px;
     }
     .register-room-upload-photo-wrapper {
         width: 90%;
@@ -60,6 +61,17 @@ const RegisterPhoto: React.FC = () => {
     const dispatch = useDispatch();
     const registerPage = useSelector((state) => state.registerPage.page);
 
+    const [content, setContent] = useState("");
+    const [location, setLocation] = useState("");
+
+    const onChangeContent = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setContent(event.target.value);
+    };
+
+    const onChangeLocation = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setLocation(event.target.value);
+    };
+
     const onChangePhotos = async (
         event: React.ChangeEvent<HTMLInputElement>
     ) => {
@@ -78,40 +90,27 @@ const RegisterPhoto: React.FC = () => {
         }
     };
 
-    const uploadPage = async () => {
-        // let uploadFileAPIs = [];
-        // let uploadFileNames: any[] = ["testData", "testData2"];
-        // for (let i = 0; i < files.length; ++i) {
-        //     const file = files[0];
-        //     const formdata = new FormData();
-        //     formdata.append("file", file);
-        //     uploadFileAPIs.push(async () => {
-        //         try {
-        //             const fileName = await uploadFileAPI(formdata);
-        //             uploadFileNames.push(fileName);
-        //         } catch (e) {
-        //             console.log(e);
-        //         }
-        //     })
-        // }
-        // await Promise.all(uploadFileAPIs);
-        // dispatch(registerRoomActions.setPhotos([...photos, ...uploadFileNames]));
-        // await uploadJsonAPI({
-        //     fileName: "photos.json",
-        //     data: [
-        //         {
-        //             date: "",
-        //             content: "",
-        //             location: "",
-        //             photos: [...photos, ...uploadFileNames]
-        //         }
-        //     ]
-        // });
-    };
-
     return (
         <Container>
-            <p className="register-room-step-info"></p>
+            <p className="register-room-step-info">스토리 작성</p>
+            <div className="register-input">
+                <Input
+                    label="제목"
+                    value={content}
+                    onChange={onChangeContent}
+                    isValid={content !== ""}
+                    errorMessage="제목을 입력하세요."
+                />
+            </div>
+            <div className="register-input">
+                <Input
+                    label="위치"
+                    value={location}
+                    onChange={onChangeLocation}
+                    isValid={location !== ""}
+                    errorMessage="위치를 입력하세요."
+                />
+            </div>
             {registerPage.photos.length <= 0 && (
                 <div className="register-room-upload-photo-wrapper">
                     <>
@@ -128,7 +127,13 @@ const RegisterPhoto: React.FC = () => {
                 </div>
             )}
             {registerPage.photos.length > 0 && <RegisterPhotoCardList />}
-            <RegisterPhotoFooter prevHref="/" nextHref="/album" />
+            <RegisterPhotoFooter
+                prevHref="/"
+                nextHref="/album"
+                isValid={
+                    !!content && !!location && registerPage.photos.length > 0
+                }
+            />
         </Container>
     );
 };
