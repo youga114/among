@@ -82,7 +82,7 @@ const RegisterPhoto: React.FC = () => {
     ) => {
         const { files } = event.target;
         if (files) {
-            EXIF.getData(files[0] as any, function () {
+            EXIF.getData(files[0] as any, function (this: any) {
                 const allMetaData = EXIF.getAllTags(this);
                 const allDate: string[] =
                     allMetaData?.DateTimeOriginal?.split(" ")?.[0]?.split(":");
