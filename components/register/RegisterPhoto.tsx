@@ -9,6 +9,8 @@ import RegisterPhotoCardList from "./RegisterPhotoCardList";
 import RegisterPhotoFooter from "./RegisterPhotoFooter";
 import { registerPageActions } from "../../store/registerPage";
 import Input from "../common/Input";
+import { getFileMetadataAPI } from "../../lib/api/metadata";
+import EXIF from "exif-js";
 
 const Container = styled.div`
     padding: 22px 30px 100px;
@@ -30,6 +32,11 @@ const Container = styled.div`
     }
     .register-input {
         margin: 10px 0 20px;
+    }
+    .register-date {
+        padding: 10px 0px 10px;
+        font-size: 18px;
+        font-weight: bold;
     }
     .register-room-upload-photo-wrapper {
         width: 90%;
@@ -59,17 +66,16 @@ const Container = styled.div`
 
 const RegisterPhoto: React.FC = () => {
     const dispatch = useDispatch();
+    const isLogged = useSelector((state) => state.user.isLogged);
     const registerPage = useSelector((state) => state.registerPage.page);
-
-    const [content, setContent] = useState("");
-    const [location, setLocation] = useState("");
+    const { content, location, date } = registerPage;
 
     const onChangeContent = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setContent(event.target.value);
+        dispatch(registerPageActions.setContent(event.target.value));
     };
 
     const onChangeLocation = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setLocation(event.target.value);
+        dispatch(registerPageActions.setLocation(event.target.value));
     };
 
     const onChangePhotos = async (
@@ -77,16 +83,26 @@ const RegisterPhoto: React.FC = () => {
     ) => {
         const { files } = event.target;
         if (files) {
-            const filesUrl = [];
-            for (let i = 0; i < files?.length ?? 1; ++i) {
-                filesUrl.push(URL.createObjectURL(files[i]));
-            }
-            dispatch(
-                registerPageActions.setRegisterPage({
-                    ...registerPage,
-                    photos: [...registerPage.photos, ...filesUrl]
-                })
-            );
+            EXIF.getData(files[0] as any, function () {
+                const allMetaData = EXIF.getAllTags(this);
+                const allDate: string[] =
+                    allMetaData?.DateTimeOriginal?.split(" ")?.[0]?.split(":");
+                const year = allDate?.[0];
+                const month = allDate?.[1];
+                const day = allDate?.[2];
+
+                const filesUrl = [];
+                for (let i = 0; i < files?.length ?? 1; ++i) {
+                    filesUrl.push(URL.createObjectURL(files[i]));
+                }
+                dispatch(
+                    registerPageActions.setRegisterPage({
+                        ...registerPage,
+                        date: `${year}년 ${month}월 ${day}일`,
+                        photos: [...registerPage.photos, ...filesUrl]
+                    })
+                );
+            });
         }
     };
 
@@ -111,6 +127,7 @@ const RegisterPhoto: React.FC = () => {
                     errorMessage="위치를 입력하세요."
                 />
             </div>
+            {date && <div className="register-date">{date}</div>}
             {registerPage.photos.length <= 0 && (
                 <div className="register-room-upload-photo-wrapper">
                     <>
@@ -131,7 +148,10 @@ const RegisterPhoto: React.FC = () => {
                 prevHref="/"
                 nextHref="/album"
                 isValid={
-                    !!content && !!location && registerPage.photos.length > 0
+                    !!content &&
+                    !!location &&
+                    registerPage.photos.length > 0 &&
+                    isLogged
                 }
             />
         </Container>

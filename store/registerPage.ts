@@ -23,6 +23,15 @@ const registerPage = createSlice({
         },
         setPhotos(state, action: PayloadAction<string[]>) {
             state.page.photos = action.payload;
+        },
+        setContent(state, action: PayloadAction<string>) {
+            state.page.content = action.payload;
+        },
+        setLocation(state, action: PayloadAction<string>) {
+            state.page.location = action.payload;
+        },
+        setDate(state, action: PayloadAction<string>) {
+            state.page.date = action.payload;
         }
     }
 });
