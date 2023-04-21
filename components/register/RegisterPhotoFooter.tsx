@@ -5,6 +5,8 @@ import BackArrowIcon from "../../public/static/svg/register/register_room_footer
 import Button from "../common/Button";
 import palette from "../../styles/palette";
 import useValidateMode from "../../hooks/useValidateMode";
+import { uploadFileAPI } from "../../lib/api/file";
+import { useSelector } from "../../store";
 
 const Container = styled.footer`
     position: fixed;
@@ -48,55 +50,30 @@ const RegisterRoomFooter: React.FC<IProps> = ({
         };
     }, []);
 
+    const photos = useSelector((state) => state.registerPage.page.photos);
+
     const onClickRegister = (
         event: React.MouseEvent<HTMLButtonElement, MouseEvent>
     ) => {
         if (!isValid) {
             event.preventDefault();
             setValidateMode(true);
+            return;
         }
 
-        // const registerRoomBody = {
-        //     ...registerRoom,
-        //     hostId: userId
-        // };
-        // try {
-        //     await registerRoomAPI(registerRoomBody);
-        //     router.push("/");
-        // } catch (e) {
-        //     console.log(e);
-        // }
-    };
-
-    const uploadPage = async () => {
-        // let uploadFileAPIs = [];
-        // let uploadFileNames: any[] = ["testData", "testData2"];
-        // for (let i = 0; i < files.length; ++i) {
-        //     const file = files[0];
-        //     const formdata = new FormData();
-        //     formdata.append("file", file);
-        //     uploadFileAPIs.push(async () => {
-        //         try {
-        //             const fileName = await uploadFileAPI(formdata);
-        //             uploadFileNames.push(fileName);
-        //         } catch (e) {
-        //             console.log(e);
-        //         }
-        //     })
-        // }
-        // await Promise.all(uploadFileAPIs);
-        // dispatch(registerRoomActions.setPhotos([...photos, ...uploadFileNames]));
-        // await uploadJsonAPI({
-        //     fileName: "photos.json",
-        //     data: [
-        //         {
-        //             date: "",
-        //             content: "",
-        //             location: "",
-        //             photos: [...photos, ...uploadFileNames]
-        //         }
-        //     ]
+        // const formdata = new FormData();
+        // formdata.append("file", files);
+        // uploadFileAPIs.push(async () => {
+        //     try {
+        //         const fileName = await uploadFileAPI(formdata);
+        //         router.push("/");
+        //     } catch (e) {
+        //         console.log(e);
+        //     }
         // });
+        // dispatch(
+        //     registerRoomActions.setPhotos([...photos, ...uploadFileNames])
+        // );
     };
 
     return (
