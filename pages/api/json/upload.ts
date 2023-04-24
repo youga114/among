@@ -1,7 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import formidable from "formidable";
 import aws from "aws-sdk";
-import { createReadStream } from "fs";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method === "POST") {

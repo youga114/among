@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import { albumActions } from "../../store/album";
 import { useDispatch } from "react-redux";
 import { uploadJsonAPI } from "../../lib/api/json";
+import { registerPageActions } from "../../store/registerPage";
 
 const Container = styled.footer`
     position: fixed;
@@ -86,12 +87,16 @@ const RegisterRoomFooter: React.FC<IProps> = ({
                 ...pages,
                 {
                     ...registerPage,
-                    photos: files
+                    photos: files.data
                 }
             ];
             dispatch(albumActions.setPages(newPages));
+            dispatch(registerPageActions.initRegisterPage());
 
-            await uploadJsonAPI({ fileName: "album.json", data: newPages });
+            await uploadJsonAPI({
+                fileName: "album.json",
+                data: newPages
+            });
 
             router.push("/album");
         } catch (e) {

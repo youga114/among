@@ -7,6 +7,8 @@ import { cookieStringToObject } from "../lib/utils";
 import axios from "../lib/api";
 import { meAPI } from "../lib/api/auth";
 import { userActions } from "../store/user";
+import { readJsonAPI } from "../lib/api/json";
+import { albumActions } from "../store/album";
 
 const app = ({ Component, ...rest }: AppProps) => {
     const { store, props } = wrapper.useWrappedStore(rest);
@@ -23,7 +25,6 @@ const app = ({ Component, ...rest }: AppProps) => {
 app.getInitialProps = wrapper.getInitialAppProps(
     (store) => async (context: AppContext) => {
         const appInitialProps = await App.getInitialProps(context);
-        const req = context.ctx.req as any;
 
         const cookieObject = cookieStringToObject(
             context.ctx.req?.headers.cookie
@@ -34,6 +35,9 @@ app.getInitialProps = wrapper.getInitialAppProps(
                 const { data } = await meAPI();
                 store.dispatch(userActions.setLoggedUser(data));
             }
+
+            const pages = (await readJsonAPI()).data;
+            store.dispatch(albumActions.setPages(pages));
         } catch (e) {
             console.log(e);
         }
