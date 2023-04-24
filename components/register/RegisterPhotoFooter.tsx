@@ -8,6 +8,9 @@ import useValidateMode from "../../hooks/useValidateMode";
 import { uploadFileAPI } from "../../lib/api/file";
 import { useSelector } from "../../store";
 import { useRouter } from "next/router";
+import { albumActions } from "../../store/album";
+import { useDispatch } from "react-redux";
+import { uploadJsonAPI } from "../../lib/api/json";
 
 const Container = styled.footer`
     position: fixed;
@@ -54,7 +57,9 @@ const RegisterRoomFooter: React.FC<IProps> = ({
     }, []);
 
     const router = useRouter();
-    const page = useSelector((state) => state.registerPage.page);
+    const dispatch = useDispatch();
+    const pages = useSelector((state) => state.album.pages);
+    const registerPage = useSelector((state) => state.registerPage.page);
 
     const onClickRegister = async (
         event: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -77,13 +82,18 @@ const RegisterRoomFooter: React.FC<IProps> = ({
         try {
             const files = await uploadFileAPI(formData);
 
-            console.log(files);
+            const newPages = [
+                ...pages,
+                {
+                    ...registerPage,
+                    photos: files
+                }
+            ];
+            dispatch(albumActions.setPages(newPages));
 
-            // const newPage = { ...page, photos: files };
+            await uploadJsonAPI({ fileName: "album.json", data: newPages });
 
-            // dispatch(albumActions.addPage(newPage));
-
-            // router.push("/");
+            router.push("/album");
         } catch (e) {
             console.log(e);
         }

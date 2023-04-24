@@ -56,6 +56,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                     }
 
                     await Promise.all(promises);
+
+                    console.log(locations);
                     resolve(locations);
                 });
             });

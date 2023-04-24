@@ -149,7 +149,6 @@ const RegisterPhoto: React.FC = () => {
             {registerPage.photos.length > 0 && <RegisterPhotoCardList />}
             <RegisterPhotoFooter
                 prevHref="/"
-                nextHref="/album"
                 isValid={
                     !!content &&
                     !!location &&

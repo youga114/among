@@ -48,9 +48,6 @@ const album = createSlice({
     reducers: {
         setPages(state, action: PayloadAction<pageType[]>) {
             state.pages = action.payload;
-        },
-        addPage(state, action: PayloadAction<pageType>) {
-            state.pages.push(action.payload);
         }
     }
 });
