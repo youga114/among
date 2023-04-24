@@ -7,6 +7,7 @@ import palette from "../../styles/palette";
 import useValidateMode from "../../hooks/useValidateMode";
 import { uploadFileAPI } from "../../lib/api/file";
 import { useSelector } from "../../store";
+import { useRouter } from "next/router";
 
 const Container = styled.footer`
     position: fixed;
@@ -35,12 +36,14 @@ interface IProps {
     prevHref?: string;
     nextHref?: string;
     isValid?: boolean;
+    fileList: FileList | null;
 }
 
 const RegisterRoomFooter: React.FC<IProps> = ({
     prevHref,
     nextHref,
-    isValid = true
+    isValid = true,
+    fileList
 }) => {
     const { setValidateMode } = useValidateMode();
 
@@ -50,9 +53,10 @@ const RegisterRoomFooter: React.FC<IProps> = ({
         };
     }, []);
 
-    const photos = useSelector((state) => state.registerPage.page.photos);
+    const router = useRouter();
+    const page = useSelector((state) => state.registerPage.page);
 
-    const onClickRegister = (
+    const onClickRegister = async (
         event: React.MouseEvent<HTMLButtonElement, MouseEvent>
     ) => {
         if (!isValid) {
@@ -61,19 +65,28 @@ const RegisterRoomFooter: React.FC<IProps> = ({
             return;
         }
 
-        // const formdata = new FormData();
-        // formdata.append("file", files);
-        // uploadFileAPIs.push(async () => {
-        //     try {
-        //         const fileName = await uploadFileAPI(formdata);
-        //         router.push("/");
-        //     } catch (e) {
-        //         console.log(e);
-        //     }
-        // });
-        // dispatch(
-        //     registerRoomActions.setPhotos([...photos, ...uploadFileNames])
-        // );
+        if (fileList == null) {
+            return;
+        }
+
+        const formData = new FormData();
+        for (let i = 0; i < fileList.length; i++) {
+            formData.append("file", fileList[i]);
+        }
+
+        try {
+            const files = await uploadFileAPI(formData);
+
+            console.log(files);
+
+            // const newPage = { ...page, photos: files };
+
+            // dispatch(albumActions.addPage(newPage));
+
+            // router.push("/");
+        } catch (e) {
+            console.log(e);
+        }
     };
 
     return (

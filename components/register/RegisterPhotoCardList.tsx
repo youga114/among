@@ -2,7 +2,6 @@ import React, { MouseEventHandler } from "react";
 import styled from "styled-components";
 import palette from "../../styles/palette";
 import { useDispatch } from "react-redux";
-import { uploadFileAPI } from "../../lib/api/file";
 
 import PencilIcon from "../../public/static/svg/register/photo/pencil.svg";
 import TrashCanIcon from "../../public/static/svg/register/photo/trash_can.svg";

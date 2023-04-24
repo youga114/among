@@ -69,6 +69,8 @@ const RegisterPhoto: React.FC = () => {
     const registerPage = useSelector((state) => state.registerPage.page);
     const { content, location, date } = registerPage;
 
+    const [fileList, setFileList] = useState<FileList | null>(null);
+
     const onChangeContent = (event: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(registerPageActions.setContent(event.target.value));
     };
@@ -82,6 +84,8 @@ const RegisterPhoto: React.FC = () => {
     ) => {
         const { files } = event.target;
         if (files) {
+            setFileList(files);
+
             EXIF.getData(files[0] as any, function (this: any) {
                 const allMetaData = EXIF.getAllTags(this);
                 const allDate: string[] =
@@ -152,6 +156,7 @@ const RegisterPhoto: React.FC = () => {
                     registerPage.photos.length > 0 &&
                     isLogged
                 }
+                fileList={fileList}
             />
         </Container>
     );
