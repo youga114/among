@@ -2,6 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import { useSelector } from "../../../store";
 import palette from "../../../styles/palette";
+import { useDispatch } from "react-redux";
+import { albumActions } from "../../../store/album";
+import { uploadJsonAPI } from "../../../lib/api/json";
+import { useRouter } from "next/router";
 
 const Container = styled.div`
     width: 100%;
@@ -36,6 +40,23 @@ const Container = styled.div`
                 font-size: 3vw;
             }
         }
+        .page-delete {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            width: 40px;
+            height: 20px;
+            font-size: 10px;
+            text-align: center;
+            color: white;
+            background-color: black;
+            opacity: 50%;
+            z-index: 5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10%;
+        }
         img {
             object-fit: cover;
             position: absolute;
@@ -65,12 +86,33 @@ const Container = styled.div`
 `;
 
 const Page: React.FC<{ id: number }> = ({ id }) => {
+    const dispatch = useDispatch();
+    const router = useRouter();
+
     const pages = useSelector((state) => state.album.pages);
     const page = pages?.[id] ?? {
         date: "",
         content: "",
         location: "",
         photos: [""]
+    };
+
+    const deletePage = async () => {
+        const newPages = [...pages];
+        newPages.splice(id, 1);
+
+        try {
+            await uploadJsonAPI({
+                fileName: "album.json",
+                data: newPages
+            });
+
+            dispatch(albumActions.setPages(newPages));
+
+            router.push("/album");
+        } catch (e) {
+            console.log(e);
+        }
     };
 
     return (
@@ -81,6 +123,9 @@ const Page: React.FC<{ id: number }> = ({ id }) => {
                     <h1>{page.content}</h1>
                     <h2>{page.location}</h2>
                 </div>
+                <div className="page-delete" onClick={deletePage}>
+                    삭제
+                </div>
                 <img src={page.photos[0]} alt="" />
             </div>
             <div className="page-photos-container">
@@ -89,7 +134,7 @@ const Page: React.FC<{ id: number }> = ({ id }) => {
                         return false;
                     }
 
-                    return <img src={photo} alt="" />;
+                    return <img src={photo} alt="" key={index} />;
                 })}
             </div>
         </Container>
