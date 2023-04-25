@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import OutsideClickHandler from "react-outside-click-handler";
 import { useDispatch } from "react-redux";
-import Link from "next/link";
 import HamburgerIcon from "../../public/static/svg/header/hamburger.svg";
 import { logoutAPI } from "../../lib/api/auth";
 import { userActions } from "../../store/user";
@@ -100,15 +99,6 @@ const HeaderUserProfile: React.FC = () => {
                 {isUsermenuOpened && (
                     <ul className="header-usermenu">
                         <li>프로필 관리</li>
-                        <Link
-                            href="/register/photo"
-                            onClick={() => {
-                                setIsUsermenuOpened(false);
-                            }}
-                            role="presentation"
-                        >
-                            <li>사진 등록하기</li>
-                        </Link>
                         <div className="header-usermenu-divider" />
                         <li role="presentation" onClick={logout}>
                             로그아웃

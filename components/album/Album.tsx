@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { useSelector } from "../../store";
 import Link from "next/link";
+import CounterPlusIcon from "../../public/static/svg/common/counter/counter_plus.svg";
+import palette from "../../styles/palette";
 
 const Container = styled.div`
     width: 100%;
@@ -47,6 +49,28 @@ const Container = styled.div`
             filter: opacity(70%);
         }
     }
+
+    .plus-content {
+        position: fixed;
+        bottom: 10px;
+        left: 10px;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        border: 1px solid ${palette.gray_48};
+        color: ${palette.gray_48};
+        background-color: white;
+        outline: none;
+        cursor: pointer;
+        z-index: 100;
+        &:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+    }
 `;
 
 const Album: React.FC = () => {
@@ -55,21 +79,32 @@ const Album: React.FC = () => {
 
     return (
         <Container>
-            {isLogged &&
-                pages.map((page, index) => {
-                    return (
-                        <Link href={"/album/page/" + index}>
-                            <div className="album-photo-container" key={index}>
-                                <div className="album-photo-container-text">
-                                    <h2>{page.date}</h2>
-                                    <h1>{page.content}</h1>
-                                    <h2>{page.location}</h2>
+            {isLogged && (
+                <>
+                    {pages.map((page, index) => {
+                        return (
+                            <Link href={"/album/page/" + index}>
+                                <div
+                                    className="album-photo-container"
+                                    key={index}
+                                >
+                                    <div className="album-photo-container-text">
+                                        <h2>{page.date}</h2>
+                                        <h1>{page.content}</h1>
+                                        <h2>{page.location}</h2>
+                                    </div>
+                                    <img src={page.photos[0]} alt="" />
                                 </div>
-                                <img src={page.photos[0]} alt="" />
-                            </div>
-                        </Link>
-                    );
-                })}
+                            </Link>
+                        );
+                    })}
+                    <Link href="/register/photo" role="presentation">
+                        <div className="plus-content">
+                            <CounterPlusIcon fill={palette.gray_48} />
+                        </div>
+                    </Link>
+                </>
+            )}
         </Container>
     );
 };
