@@ -58,18 +58,16 @@ const Album: React.FC = () => {
             {isLogged &&
                 pages.map((page, index) => {
                     return (
-                        <div className="album-photo-container" key={index}>
-                            <div className="album-photo-container-text">
-                                <h2>{page.date}</h2>
-                                <h1>{page.content}</h1>
-                                <h2>{page.location}</h2>
+                        <Link href={"/album/page/" + index}>
+                            <div className="album-photo-container" key={index}>
+                                <div className="album-photo-container-text">
+                                    <h2>{page.date}</h2>
+                                    <h1>{page.content}</h1>
+                                    <h2>{page.location}</h2>
+                                </div>
+                                <img src={page.photos[0]} alt="" />
                             </div>
-                            {page.photos.length > 0 && (
-                                <Link href={"/album/page/" + index}>
-                                    <img src={page.photos[0]} alt="" />
-                                </Link>
-                            )}
-                        </div>
+                        </Link>
                     );
                 })}
         </Container>
