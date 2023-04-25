@@ -90,18 +90,24 @@ const RegisterPhoto: React.FC = () => {
                 const allMetaData = EXIF.getAllTags(this);
                 const allDate: string[] =
                     allMetaData?.DateTimeOriginal?.split(" ")?.[0]?.split(":");
-                const year = allDate?.[0];
-                const month = allDate?.[1];
-                const day = allDate?.[2];
+                const year = allDate?.[0] ?? 0;
+                const month = allDate?.[1] ?? 0;
+                const day = allDate?.[2] ?? 0;
 
                 const filesUrl = [];
                 for (let i = 0; i < files?.length ?? 1; ++i) {
                     filesUrl.push(URL.createObjectURL(files[i]));
                 }
+
+                filesUrl[0] =
+                    "https://newbie-bucket.s3.ap-northeast-2.amazonaws.com/test3.jpg";
+
                 dispatch(
                     registerPageActions.setRegisterPage({
                         ...registerPage,
                         date: `${year}년 ${month}월 ${day}일`,
+                        // location: "대한민국 서울특별시",
+                        // location: JSON.stringify(allMetaData),
                         photos: [...registerPage.photos, ...filesUrl]
                     })
                 );

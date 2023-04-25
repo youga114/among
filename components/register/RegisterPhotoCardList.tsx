@@ -1,4 +1,4 @@
-import React, { MouseEventHandler } from "react";
+import React from "react";
 import styled from "styled-components";
 import palette from "../../styles/palette";
 import { useDispatch } from "react-redux";
@@ -8,6 +8,7 @@ import TrashCanIcon from "../../public/static/svg/register/photo/trash_can.svg";
 import GrayPlusIcon from "../../public/static/svg/register/photo/gray_plus.svg";
 import { useSelector } from "../../store";
 import { registerPageActions } from "../../store/registerPage";
+import EXIF from "exif-js";
 
 const Container = styled.ul`
     .register-room-first-photo-wrapper {
@@ -148,13 +149,33 @@ const RegisterPhotoCardList: React.FC = () => {
         el.click();
     };
 
+    const onLoadImage = (e: any) => {
+        dispatch(
+            registerPageActions.setRegisterPage({
+                ...registerPage,
+                location: "img1"
+            })
+        );
+
+        EXIF.getData(e.target, function (this: any) {
+            const allMetaData = EXIF.getAllTags(this);
+
+            dispatch(
+                registerPageActions.setRegisterPage({
+                    ...registerPage,
+                    location: JSON.stringify(allMetaData)
+                })
+            );
+        });
+    };
+
     return (
         <Container>
             {registerPage.photos.map((photo, index) => (
                 <React.Fragment key={index}>
                     {index === 0 && (
                         <li className="register-room-first-photo-wrapper">
-                            <img src={photo} alt="" />
+                            <img src={photo} alt="" onLoad={onLoadImage} />
                             <div className="register-room-photo-interaction-buttons">
                                 <button
                                     type="button"
