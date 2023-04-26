@@ -10,6 +10,7 @@ import RegisterPhotoFooter from "./RegisterPhotoFooter";
 import { registerPageActions } from "../../store/registerPage";
 import Input from "../common/Input";
 import EXIF from "exif-js";
+import { uploadFileAPI } from "../../lib/api/file";
 
 const Container = styled.div`
     padding: 22px 30px 100px;
@@ -86,32 +87,18 @@ const RegisterPhoto: React.FC = () => {
         if (files) {
             setFileList(files);
 
-            EXIF.getData(files[0] as any, function (this: any) {
-                const allMetaData = EXIF.getAllTags(this);
-                const allDate: string[] =
-                    allMetaData?.DateTimeOriginal?.split(" ")?.[0]?.split(":");
-                const year = allDate?.[0] ?? 0;
-                const month = allDate?.[1] ?? 0;
-                const day = allDate?.[2] ?? 0;
+            const filesName = [];
 
-                const filesUrl = [];
-                for (let i = 0; i < files?.length ?? 1; ++i) {
-                    filesUrl.push(URL.createObjectURL(files[i]));
-                }
+            for (let i = 0; i < files?.length ?? 1; ++i) {
+                filesName.push(URL.createObjectURL(files[i]));
+            }
 
-                filesUrl[0] =
-                    "https://newbie-bucket.s3.ap-northeast-2.amazonaws.com/test3.jpg";
-
-                dispatch(
-                    registerPageActions.setRegisterPage({
-                        ...registerPage,
-                        date: `${year}년 ${month}월 ${day}일`,
-                        // location: "대한민국 서울특별시",
-                        // location: JSON.stringify(allMetaData),
-                        photos: [...registerPage.photos, ...filesUrl]
-                    })
-                );
-            });
+            dispatch(
+                registerPageActions.setRegisterPage({
+                    ...registerPage,
+                    photos: [...registerPage.photos, ...filesName]
+                })
+            );
         }
     };
 
@@ -140,12 +127,7 @@ const RegisterPhoto: React.FC = () => {
             {registerPage.photos.length <= 0 && (
                 <div className="register-room-upload-photo-wrapper">
                     <>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            onChange={onChangePhotos}
-                            multiple
-                        />
+                        <input type="file" onChange={onChangePhotos} multiple />
                         <Button icon={<UploadIcon />} width="167px">
                             사진 업로드
                         </Button>

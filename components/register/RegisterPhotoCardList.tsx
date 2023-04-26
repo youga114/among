@@ -150,19 +150,18 @@ const RegisterPhotoCardList: React.FC = () => {
     };
 
     const onLoadImage = (e: any) => {
-        dispatch(
-            registerPageActions.setRegisterPage({
-                ...registerPage,
-                location: "img1"
-            })
-        );
-
         EXIF.getData(e.target, function (this: any) {
             const allMetaData = EXIF.getAllTags(this);
+            const allDate: string[] =
+                allMetaData?.DateTimeOriginal?.split(" ")?.[0]?.split(":");
+            const year = allDate?.[0] ?? 0;
+            const month = allDate?.[1] ?? 0;
+            const day = allDate?.[2] ?? 0;
 
             dispatch(
                 registerPageActions.setRegisterPage({
                     ...registerPage,
+                    date: `${year}년 ${month}월 ${day}일`,
                     location: JSON.stringify(allMetaData)
                 })
             );
