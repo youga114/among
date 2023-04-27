@@ -6,6 +6,13 @@ const initialState: { page: pageType } = {
         date: "",
         content: "",
         location: "",
+        latitude: 0,
+        longitude: 0,
+        country: "",
+        city: "",
+        district: "",
+        streetAddress: "",
+        postcode: "",
         photos: []
     }
 };

@@ -9,6 +9,7 @@ import GrayPlusIcon from "../../public/static/svg/register/photo/gray_plus.svg";
 import { useSelector } from "../../store";
 import { registerPageActions } from "../../store/registerPage";
 import EXIF from "exif-js";
+import { getLocationInfoAPI } from "../../lib/api/map";
 
 const Container = styled.ul`
     .register-room-first-photo-wrapper {
@@ -150,7 +151,7 @@ const RegisterPhotoCardList: React.FC = () => {
     };
 
     const onLoadImage = (e: any) => {
-        EXIF.getData(e.target, function (this: any) {
+        EXIF.getData(e.target, async function (this: any) {
             const allMetaData = EXIF.getAllTags(this);
             const allDate: string[] =
                 allMetaData?.DateTimeOriginal?.split(" ")?.[0]?.split(":");
@@ -158,11 +159,54 @@ const RegisterPhotoCardList: React.FC = () => {
             const month = allDate?.[1] ?? 0;
             const day = allDate?.[2] ?? 0;
 
+            const exifLong = allMetaData.GPSLongitude,
+                exifLat = allMetaData.GPSLatitude,
+                exifLongRef = allMetaData.GPSLongitudeRef,
+                exifLatRef = allMetaData.GPSLatitudeRef;
+
+            let latitude = 37.5666784;
+            let longitude = 126.9778436;
+
+            if (exifLatRef === "S") {
+                latitude =
+                    exifLat?.[0] * -1 +
+                    (exifLat?.[1] * -60 + exifLat?.[2] * -1) / 3600;
+            } else {
+                latitude =
+                    exifLat?.[0] + (exifLat?.[1] * 60 + exifLat?.[2]) / 3600;
+            }
+
+            if (exifLongRef === "W") {
+                longitude =
+                    exifLong?.[0] * -1 +
+                    (exifLong?.[1] * -60 + exifLong?.[2] * -1) / 3600;
+            } else {
+                longitude =
+                    exifLong?.[0] + (exifLong?.[1] * 60 + exifLong?.[2]) / 3600;
+            }
+
+            const { data: currentLocation } = await getLocationInfoAPI({
+                latitude: latitude,
+                longitude: longitude
+            });
+
+            let location = "";
+            if (currentLocation.country) {
+                location = `${currentLocation.country} ${currentLocation.city} ${currentLocation.district}`;
+            }
+
             dispatch(
                 registerPageActions.setRegisterPage({
                     ...registerPage,
                     date: `${year}년 ${month}월 ${day}일`,
-                    location: JSON.stringify(allMetaData)
+                    location,
+                    latitude: currentLocation.latitude || 0,
+                    longitude: currentLocation.longitude || 0,
+                    country: currentLocation.country || "",
+                    city: currentLocation.city || "",
+                    district: currentLocation.district || "",
+                    streetAddress: currentLocation.streetAddress || "",
+                    postcode: currentLocation.postcode || ""
                 })
             );
         });
